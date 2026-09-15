@@ -1,0 +1,5551 @@
+
+if not getgenv().PYKey then
+	getgenv().ExecRealScript = true
+	loadstring(game:HttpGet("https://gitlab.com/zkay404-group/ProjectYielding/-/raw/main/ZKPublicFarm"))()
+	return
+end
+if getgenv().ScriptExecuted then
+	return
+end
+getgenv().ScriptExecuted = true
+local v2051 = table.create(10)
+local v2052 = v190[43]
+local v2053 = v190[35]
+v2051[1] = "France"
+v2051[2] = "Netherlands"
+v2051[3] = v2052
+v2051[4] = v2053
+v2051[5] = "Australia"
+v2051[6] = "Germany"
+v2051[7] = "India"
+v2051[8] = "Brazil"
+v2051[9] = "Singapore"
+v2051[10] = "Japan"
+local v2054 = {
+	Background = Color3.fromRGB(17, 18, 23),
+	Panel = Color3.fromRGB(26, 27, 34),
+	PanelAlt = Color3.fromRGB(33, 34, 43),
+	Stroke = Color3.fromRGB(50, 51, 63),
+	TextPrimary = Color3.fromRGB(240, 240, 245),
+	TextDim = Color3.fromRGB(145, 146, 158),
+	Amber = Color3.fromRGB(240, 170, 60),
+	Teal = Color3.fromRGB(70, 200, 190),
+	Rose = Color3.fromRGB(225, 95, 110),
+	Lavender = Color3.fromRGB(150, 130, 235),
+	FarmOn = Color3.fromRGB(70, 200, 130),
+	FarmOff = Color3.fromRGB(200, 70, 80)
+}
+
+local function v2055(p2454, p2455)
+	local UICorner = Instance.new("UICorner")
+	local new2 = UDim.new
+	if not p2455 then
+		p2455 = 12
+	end
+	UICorner.CornerRadius = new2(0, p2455)
+	UICorner.Parent = p2454
+	return UICorner
+end
+
+local function v2056(p2456, p2457, p2458)
+	local UIStroke = Instance.new("UIStroke")
+	if not p2457 then
+		p2457 = v2054.Stroke
+	end
+	UIStroke.Color = p2457
+	if not p2458 then
+		p2458 = 1
+	end
+	UIStroke.Thickness = p2458
+	UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+	UIStroke.Parent = p2456
+	return UIStroke
+end
+
+local function v2057(p2459, p2460)
+	local UIPadding3 = Instance.new("UIPadding")
+	UIPadding3.PaddingTop = UDim.new(0, p2460)
+	UIPadding3.PaddingBottom = UDim.new(0, p2460)
+	UIPadding3.PaddingLeft = UDim.new(0, p2460)
+	UIPadding3.PaddingRight = UDim.new(0, p2460)
+	UIPadding3.Parent = p2459
+	return UIPadding3
+end
+
+local function v2058(p2461, p2462, p2463, p2464, p2465)
+	local TweenService2 = game:GetService("TweenService")
+	local Create = TweenService2.Create
+	local new3 = TweenInfo.new
+	if not p2463 then
+		p2463 = 0.2
+	end
+	if not p2464 then
+		p2464 = Enum.EasingStyle.Quad
+	end
+	if not p2465 then
+		p2465 = Enum.EasingDirection.Out
+	end
+	return (Create(TweenService2, p2461, new3(p2463, p2464, p2465), p2462))
+end
+
+local function v2059(p2466, p2467)
+	p2466.ClipsDescendants = true
+	if p2467 then
+		p2466.TextTruncate = Enum.TextTruncate.AtEnd
+	end
+end
+
+local HttpService2 = game:GetService("HttpService")
+local LocalPlayer = game:GetService("Players").LocalPlayer
+local v2060 = v190[12] .. LocalPlayer.Name
+local v2061 = v2060 .. v190[28]
+
+local function v2062()
+	if not isfolder("ZKAYHub") then
+		makefolder("ZKAYHub")
+	end
+	if not isfolder(v2060) then
+		makefolder(v2060)
+	end
+end
+
+local v2063 = { country = v2051[1], hopOnCount = "1000", webhookUrl = "" }
+local v2064 = table.clone(v2063)
+
+local function v2065()
+	v2062()
+	local v2468, v2469
+	v2469, v2468 = pcall(HttpService2.JSONEncode, HttpService2, v2064)
+	if v2469 then
+		writefile(v2061, v2468)
+	else
+		warn(v190[4], v2468)
+	end
+end
+
+local function v2066()
+	v2062()
+	if not isfile(v2061) then
+		return
+	end
+	local v2470, v2471
+	v2471, v2470 = pcall(readfile, v2061)
+	if not v2471 then
+		warn(v190[2], v2470)
+		return
+	end
+	local v2472, v2473
+	v2473, v2472 = pcall(HttpService2.JSONDecode, HttpService2, v2470)
+	if not (v2473 and v10(v2472) == "table") then
+		warn(v190[1])
+		return
+	end
+	for v2474, v2475 in pairs2(v2472) do
+		if v2474 == "hopOnCount" and tonumber(v2475) and tonumber(v2475) <= 500 then
+			v2064[v2474] = "1000"
+		else
+			v2064[v2474] = v2475
+		end
+	end
+end
+
+v2066()
+local v2067 = getgenv()
+local v2068 = getgenv().TimeFarmed
+if not v2068 then
+	v2068 = 0
+end
+v2067.TimeFarmed = v2068
+local v2069 = getgenv()
+local v2070 = getgenv().session_start
+if not v2070 then
+	v2070 = os.time()
+end
+v2069.session_start = v2070
+local v2071 = getgenv()
+local v2072 = getgenv().carriedKills
+if not v2072 then
+	v2072 = 0
+end
+v2071.carriedKills = v2072
+local v2073 = getgenv()
+local v2074 = getgenv().emotes
+if not v2074 then
+	v2074 = 0
+end
+v2073.emotes = v2074
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "ZKAYFarmUI"
+ScreenGui.ResetOnSpawn = false
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.Parent = game:GetService("CoreGui")
+local Frame = Instance.new("Frame")
+Frame.Name = "MainFrame"
+Frame.Size = UDim2.fromOffset(540, 480)
+Frame.Position = UDim2.fromScale(0.5, 0.5)
+Frame.AnchorPoint = Vector2.new(0.5, 0.5)
+Frame.BackgroundColor3 = v2054.Background
+Frame.BorderSizePixel = 0
+Frame.Parent = ScreenGui
+Frame.Active = true
+Frame.Draggable = true
+v2055(Frame, 18)
+v2056(Frame, v2054.Stroke, 1)
+local Frame2 = Instance.new("Frame")
+Frame2.Name = "AccentStrip"
+Frame2.BackgroundColor3 = v2054.Amber
+Frame2.BorderSizePixel = 0
+Frame2.Size = UDim2.new(1, 0, 0, 4)
+Frame2.Position = UDim2.fromOffset(0, 0)
+Frame2.ZIndex = 2
+Frame.ClipsDescendants = true
+Frame2.Parent = Frame
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.FillDirection = Enum.FillDirection.Vertical
+UIListLayout.Padding = UDim.new(0, 14)
+UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout.Parent = Frame
+v2057(Frame, 18)
+local Frame3 = Instance.new("Frame")
+Frame3.Name = "TitleBar"
+Frame3.Size = UDim2.new(1, 0, 0, 40)
+Frame3.BackgroundTransparency = 1
+Frame3.LayoutOrder = 1
+Frame3.Parent = Frame
+local Frame4 = Instance.new("Frame")
+Frame4.Name = "Badge"
+Frame4.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+Frame4.Size = UDim2.fromOffset(36, 36)
+Frame4.Position = UDim2.fromOffset(0, 2)
+v2055(Frame4, 10)
+Frame4.Parent = Frame3
+local TextLabel = Instance.new("TextLabel")
+TextLabel.BackgroundTransparency = 1
+TextLabel.Size = UDim2.new(1, 0, 1, 0)
+TextLabel.Font = Enum.Font.GothamBold
+TextLabel.Text = "PY"
+TextLabel.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.TextSize = 18
+TextLabel.Parent = Frame4
+local Frame5 = Instance.new("Frame")
+Frame5.Name = v190[42]
+Frame5.BackgroundColor3 = v2054.PanelAlt
+Frame5.Size = UDim2.fromOffset(112, 36)
+Frame5.Position = UDim2.new(1, -112, 0, 2)
+v2055(Frame5, 10)
+v2056(Frame5, v2054.Stroke, 1)
+Frame5.ClipsDescendants = true
+Frame5.Parent = Frame3
+local TextLabel2 = Instance.new("TextLabel")
+TextLabel2.BackgroundTransparency = 1
+TextLabel2.Size = UDim2.fromOffset(20, 36)
+TextLabel2.Position = UDim2.fromOffset(8, 0)
+TextLabel2.Font = Enum.Font.GothamBold
+TextLabel2.Text = "⏱"
+TextLabel2.TextColor3 = v2054.Amber
+TextLabel2.TextSize = 14
+TextLabel2.Parent = Frame5
+local TextLabel3 = Instance.new("TextLabel")
+TextLabel3.Name = "Value"
+TextLabel3.BackgroundTransparency = 1
+TextLabel3.Size = UDim2.new(1, -34, 1, 0)
+TextLabel3.Position = UDim2.fromOffset(30, 0)
+TextLabel3.Font = Enum.Font.GothamBold
+TextLabel3.Text = "00:00:00"
+TextLabel3.TextColor3 = v2054.TextPrimary
+TextLabel3.TextSize = 13
+TextLabel3.TextXAlignment = Enum.TextXAlignment.Left
+v2059(TextLabel3, true)
+TextLabel3.Parent = Frame5
+local TextLabel4 = Instance.new("TextLabel")
+TextLabel4.Name = "Title"
+TextLabel4.BackgroundTransparency = 1
+TextLabel4.Size = UDim2.new(1, -168, 0, 20)
+TextLabel4.Position = UDim2.fromOffset(48, 0)
+TextLabel4.Font = Enum.Font.GothamBold
+TextLabel4.Text = v190[26]
+TextLabel4.TextColor3 = v2054.TextPrimary
+TextLabel4.TextSize = 17
+TextLabel4.TextXAlignment = Enum.TextXAlignment.Left
+v2059(TextLabel4, true)
+TextLabel4.Parent = Frame3
+local TextLabel5 = Instance.new("TextLabel")
+TextLabel5.Name = "Subtitle"
+TextLabel5.BackgroundTransparency = 1
+TextLabel5.Size = UDim2.new(1, -168, 0, 16)
+TextLabel5.Position = UDim2.fromOffset(48, 20)
+TextLabel5.Font = Enum.Font.Gotham
+TextLabel5.Text = v190[15]
+TextLabel5.TextColor3 = v2054.TextDim
+TextLabel5.TextSize = 12
+TextLabel5.TextXAlignment = Enum.TextXAlignment.Left
+v2059(TextLabel5, true)
+TextLabel5.Parent = Frame3
+
+local function v2075(p2476, p2477, p2478, p2479)
+	local Frame14 = Instance.new("Frame")
+	Frame14.Name = p2477 .. "Chip"
+	Frame14.BackgroundColor3 = v2054.Panel
+	Frame14.BorderSizePixel = 0
+	Frame14.Size = UDim2.new(0.25, -9, 1, 0)
+	Frame14.ClipsDescendants = true
+	v2055(Frame14, 12)
+	v2056(Frame14, v2054.Stroke, 1)
+	local Frame15 = Instance.new("Frame")
+	Frame15.BackgroundColor3 = p2479
+	Frame15.Size = UDim2.fromOffset(8, 8)
+	Frame15.Position = UDim2.fromOffset(12, 12)
+	v2055(Frame15, 4)
+	Frame15.Parent = Frame14
+	local TextLabel11 = Instance.new("TextLabel")
+	TextLabel11.BackgroundTransparency = 1
+	TextLabel11.Position = UDim2.fromOffset(12, 26)
+	TextLabel11.Size = UDim2.new(1, -20, 0, 26)
+	TextLabel11.Font = Enum.Font.GothamBold
+	TextLabel11.Text = p2478
+	TextLabel11.TextColor3 = v2054.TextPrimary
+	TextLabel11.TextSize = 19
+	TextLabel11.TextXAlignment = Enum.TextXAlignment.Left
+	v2059(TextLabel11, true)
+	TextLabel11.Parent = Frame14
+	local TextLabel12 = Instance.new("TextLabel")
+	TextLabel12.BackgroundTransparency = 1
+	TextLabel12.Position = UDim2.fromOffset(12, 52)
+	TextLabel12.Size = UDim2.new(1, -20, 0, 12)
+	TextLabel12.Font = Enum.Font.Gotham
+	TextLabel12.Text = string.upper(p2477)
+	TextLabel12.TextColor3 = v2054.TextDim
+	TextLabel12.TextSize = 9
+	TextLabel12.TextXAlignment = Enum.TextXAlignment.Left
+	v2059(TextLabel12, true)
+	TextLabel12.Parent = Frame14
+	Frame14.Parent = p2476
+	return Frame14, TextLabel11
+end
+
+local Frame6 = Instance.new("Frame")
+Frame6.Name = "StatsRow"
+Frame6.BackgroundTransparency = 1
+Frame6.Size = UDim2.new(1, 0, 0, 76)
+Frame6.LayoutOrder = 2
+Frame6.Parent = Frame
+local UIListLayout2 = Instance.new("UIListLayout")
+UIListLayout2.FillDirection = Enum.FillDirection.Horizontal
+UIListLayout2.Padding = UDim.new(0, 12)
+UIListLayout2.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout2.Parent = Frame6
+local v2076, _
+_, v2076 = v2075(Frame6, "Kills", "0", v2054.Rose)
+local v2077, _
+_, v2077 = v2075(Frame6, "Kills/hr", "0", v2054.Teal)
+local v2078, _
+_, v2078 = v2075(Frame6, "Emotes", "0", v2054.Lavender)
+local v2079, _
+_, v2079 = v2075(Frame6, "Total", "0", v2054.Amber)
+local Frame7 = Instance.new("Frame")
+Frame7.Name = v190[46]
+Frame7.BackgroundColor3 = v2054.Panel
+Frame7.BorderSizePixel = 0
+Frame7.Size = UDim2.new(1, 0, 0, 92)
+Frame7.LayoutOrder = 3
+Frame7.ZIndex = 5
+v2055(Frame7, 14)
+v2056(Frame7, v2054.Stroke, 1)
+Frame7.Parent = Frame
+v2057(Frame7, 14)
+local UIListLayout3 = Instance.new("UIListLayout")
+UIListLayout3.FillDirection = Enum.FillDirection.Horizontal
+UIListLayout3.Padding = UDim.new(0, 14)
+UIListLayout3.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout3.Parent = Frame7
+local Frame8 = Instance.new("Frame")
+Frame8.Name = "CountryBox"
+Frame8.BackgroundTransparency = 1
+Frame8.Size = UDim2.new(0.5, -7, 1, 0)
+Frame8.ZIndex = 5
+Frame8.Parent = Frame7
+local TextLabel6 = Instance.new("TextLabel")
+TextLabel6.BackgroundTransparency = 1
+TextLabel6.Position = UDim2.fromOffset(0, 0)
+TextLabel6.Size = UDim2.new(1, 0, 0, 14)
+TextLabel6.Font = Enum.Font.GothamMedium
+TextLabel6.Text = "REGION"
+TextLabel6.TextColor3 = v2054.TextDim
+TextLabel6.TextSize = 11
+TextLabel6.TextXAlignment = Enum.TextXAlignment.Left
+v2059(TextLabel6, true)
+TextLabel6.Parent = Frame8
+local TextButton = Instance.new("TextButton")
+TextButton.Name = v190[31]
+TextButton.BackgroundColor3 = v2054.PanelAlt
+TextButton.Position = UDim2.fromOffset(0, 20)
+TextButton.Size = UDim2.new(1, 0, 0, 30)
+TextButton.AutoButtonColor = false
+TextButton.Font = Enum.Font.Gotham
+TextButton.Text = ""
+TextButton.ZIndex = 5
+v2055(TextButton, 8)
+TextButton.Parent = Frame8
+local TextLabel7 = Instance.new("TextLabel")
+TextLabel7.BackgroundTransparency = 1
+TextLabel7.Size = UDim2.new(1, -28, 1, 0)
+TextLabel7.Position = UDim2.fromOffset(10, 0)
+TextLabel7.Font = Enum.Font.Gotham
+local v2080 = v2064.country
+local v2081 = 1
+if not v2080 then
+	v2080 = "Select..."
+	v2081 = 1
+end
+TextLabel7.Text = v2080
+TextLabel7.TextColor3 = v2054.TextPrimary
+TextLabel7.TextSize = 13
+TextLabel7.TextXAlignment = Enum.TextXAlignment.Left
+TextLabel7.ZIndex = 6
+v2059(TextLabel7, true)
+TextLabel7.Parent = TextButton
+local TextLabel8 = Instance.new("TextLabel")
+TextLabel8.BackgroundTransparency = 1
+v2081 = 30
+TextLabel8.Size = UDim2.fromOffset(20, v2081)
+v2081 = -22
+TextLabel8.Position = UDim2.new(1, v2081, 0, 0)
+TextLabel8.Font = Enum.Font.GothamBold
+TextLabel8.Text = "▾"
+TextLabel8.TextColor3 = v2054.TextDim
+TextLabel8.TextSize = 12
+TextLabel8.ZIndex = 6
+TextLabel8.Parent = TextButton
+local v2082 = Instance.new(v190[33])
+v2082.Name = v190[48]
+v2082.BackgroundColor3 = v2054.PanelAlt
+v2082.BorderSizePixel = 0
+v2081 = 0
+v2082.Position = UDim2.fromOffset(v2081, 54)
+v2081 = 1
+v2082.Size = UDim2.new(v2081, 0, 0, 0)
+v2081 = 0
+v2082.CanvasSize = UDim2.new(v2081, 0, 0, 0)
+v2082.ScrollingDirection = Enum.ScrollingDirection.Y
+v2082.ScrollBarThickness = 6
+v2082.ScrollBarImageColor3 = v2054.TextDim
+v2082.ClipsDescendants = true
+v2082.Visible = false
+v2082.ZIndex = 10
+v2081 = v2082
+v2055(v2081, 8)
+v2081 = v2082
+v2056(v2081, v2054.Stroke, 1)
+v2082.Parent = Frame8
+v2081 = "UIListLayout"
+local v2083 = Instance.new(v2081)
+v2081 = Enum
+v2081 = v2081.SortOrder
+v2081 = v2081.LayoutOrder
+v2083.SortOrder = v2081
+v2083.Parent = v2082
+v2081 = false
+
+local function v2084()
+	v2081 = false
+	v2082.Visible = false
+	v2082.Size = UDim2.new(1, 0, 0, 0)
+	TextLabel8.Text = "▾"
+end
+
+local function v2085()
+	v2081 = true
+	v2082.Visible = true
+	TextLabel8.Text = "▴"
+	v2082.CanvasSize = UDim2.new(0, 0, 0, #v2051 * 28)
+	local UIScale2 = Frame:FindFirstChildOfClass("UIScale")
+	local v2480
+	if UIScale2 then
+		v2480 = 0 < UIScale2.Scale
+	else
+		v2480 = UIScale2
+	end
+	v2480 = v2480 and UIScale2.Scale or 1
+	local v2481 = workspace.CurrentCamera
+	v2481 = v2481 and v2481.ViewportSize.Y or 600
+	local v2482 = v2082.AbsolutePosition.Y
+	local v2483 = math.max(1, math.floor((v2481 - v2482 - 12) / v2480 / 28))
+	local v2484 = math.min(#v2051, 5, v2483)
+	v2082.Size = UDim2.new(1, 0, 0, v2484 * 28)
+end
+
+local function v2086()
+	if v2081 then
+		v2084()
+	else
+		v2085()
+	end
+end
+
+TextButton.MouseButton1Click:Connect(v2086)
+for v2087, v2088 in ipairs(v2051) do
+	local TextButton2 = Instance.new("TextButton")
+	TextButton2.Name = v2088
+	TextButton2.LayoutOrder = v2087
+	TextButton2.BackgroundColor3 = v2054.PanelAlt
+	TextButton2.AutoButtonColor = true
+	TextButton2.Size = UDim2.new(1, 0, 0, 28)
+	TextButton2.Font = Enum.Font.Gotham
+	TextButton2.Text = "   " .. v2088
+	TextButton2.TextXAlignment = Enum.TextXAlignment.Left
+	TextButton2.TextColor3 = v2054.TextPrimary
+	TextButton2.TextSize = 13
+	TextButton2.ZIndex = 11
+	v2059(TextButton2, true)
+	TextButton2.Parent = v2082
+	local v2089 = v2088
+
+	local function v2090()
+		v2064.country = v2089
+		TextLabel7.Text = v2089
+		v2084()
+		v2065()
+	end
+
+	TextButton2.MouseButton1Click:Connect(v2090)
+end
+local Frame9 = Instance.new("Frame")
+Frame9.Name = "HopOnBox"
+Frame9.BackgroundTransparency = 1
+Frame9.Size = UDim2.new(0.5, -7, 1, 0)
+Frame9.Parent = Frame7
+local TextLabel9 = Instance.new("TextLabel")
+TextLabel9.BackgroundTransparency = 1
+TextLabel9.Position = UDim2.fromOffset(0, 0)
+TextLabel9.Size = UDim2.new(1, 0, 0, 14)
+TextLabel9.Font = Enum.Font.GothamMedium
+TextLabel9.Text = v190[19]
+TextLabel9.TextColor3 = v2054.TextDim
+TextLabel9.TextSize = 11
+TextLabel9.TextXAlignment = Enum.TextXAlignment.Left
+v2059(TextLabel9, true)
+TextLabel9.Parent = Frame9
+local TextBox = Instance.new("TextBox")
+TextBox.Name = "HopOnInput"
+TextBox.BackgroundColor3 = v2054.PanelAlt
+TextBox.Position = UDim2.fromOffset(0, 20)
+TextBox.Size = UDim2.new(1, 0, 0, 30)
+TextBox.Font = Enum.Font.Gotham
+TextBox.PlaceholderText = "kills num"
+TextBox.PlaceholderColor3 = v2054.TextDim
+local v2091 = v2064.hopOnCount
+if not v2091 then
+	v2091 = ""
+end
+TextBox.Text = v2091
+TextBox.TextColor3 = v2054.TextPrimary
+TextBox.TextSize = 13
+TextBox.ClearTextOnFocus = false
+TextBox.TextXAlignment = Enum.TextXAlignment.Left
+TextBox.ClipsDescendants = true
+v2055(TextBox, 8)
+TextBox.Parent = Frame9
+local UIPadding = Instance.new("UIPadding")
+UIPadding.PaddingLeft = UDim.new(0, 10)
+UIPadding.Parent = TextBox
+
+local function v2092()
+	local gsub = TextBox.Text:gsub("%D", "")
+	if gsub ~= TextBox.Text then
+		TextBox.Text = gsub
+	end
+	v2064.hopOnCount = gsub
+	v2065()
+end
+
+TextBox:GetPropertyChangedSignal("Text"):Connect(v2092)
+local Frame10 = Instance.new("Frame")
+Frame10.Name = "WebhookRow"
+Frame10.BackgroundTransparency = 1
+Frame10.Size = UDim2.new(1, 0, 0, 42)
+Frame10.LayoutOrder = 4
+Frame10.Parent = Frame
+local UIListLayout4 = Instance.new("UIListLayout")
+UIListLayout4.FillDirection = Enum.FillDirection.Horizontal
+UIListLayout4.Padding = UDim.new(0, 12)
+UIListLayout4.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout4.Parent = Frame10
+local TextBox2 = Instance.new("TextBox")
+TextBox2.Name = "WebhookInput"
+TextBox2.BackgroundColor3 = v2054.Panel
+TextBox2.BorderSizePixel = 0
+TextBox2.Size = UDim2.new(1, -136, 1, 0)
+TextBox2.Font = Enum.Font.Gotham
+TextBox2.PlaceholderText = "https://discord.com/api/webhooks/..."
+TextBox2.PlaceholderColor3 = v2054.TextDim
+local v2093 = v2064.webhookUrl
+local v2094 = true
+if not v2093 then
+	v2093 = ""
+	v2094 = true
+end
+TextBox2.Text = v2093
+TextBox2.TextColor3 = v2054.TextPrimary
+TextBox2.TextSize = 13
+TextBox2.ClearTextOnFocus = false
+TextBox2.TextXAlignment = Enum.TextXAlignment.Left
+TextBox2.ClipsDescendants = true
+v2055(TextBox2, 10)
+v2056(TextBox2, v2054.Stroke, 1)
+TextBox2.Parent = Frame10
+
+local function v2095()
+	v2064.webhookUrl = TextBox2.Text
+	v2065()
+end
+
+TextBox2:GetPropertyChangedSignal("Text"):Connect(v2095)
+local UIPadding2 = Instance.new("UIPadding")
+UIPadding2.PaddingLeft = UDim.new(0, 12)
+UIPadding2.Parent = TextBox2
+local TextButton3 = Instance.new("TextButton")
+TextButton3.Name = "TestWebhook"
+TextButton3.BackgroundColor3 = v2054.PanelAlt
+TextButton3.Size = UDim2.new(0, 124, 1, 0)
+TextButton3.Font = Enum.Font.GothamMedium
+TextButton3.Text = "Test Webhook"
+TextButton3.TextColor3 = v2054.TextPrimary
+TextButton3.TextSize = 13
+v2055(TextButton3, 10)
+v2056(TextButton3, v2054.Stroke, 1)
+TextButton3.Parent = Frame10
+local Frame11 = Instance.new("Frame")
+Frame11.Name = "BottomRow"
+Frame11.BackgroundTransparency = 1
+Frame11.Size = UDim2.new(1, 0, 0, 46)
+Frame11.LayoutOrder = 5
+Frame11.Parent = Frame
+local TextButton4 = Instance.new("TextButton")
+TextButton4.Name = "FarmToggle"
+TextButton4.BackgroundColor3 = v2054.FarmOn
+TextButton4.Size = UDim2.new(1, 0, 1, 0)
+TextButton4.Font = Enum.Font.GothamBold
+TextButton4.Text = "Start Farm"
+TextButton4.TextColor3 = Color3.fromRGB(255, 255, 255)
+TextButton4.TextSize = 15
+TextButton4.AutoButtonColor = false
+v2055(TextButton4, 12)
+TextButton4.Parent = Frame11
+
+local function v2096(p2485)
+	v2094 = p2485
+	if p2485 then
+		TextButton4.Text = "Stop Farm"
+		local v2486 = { BackgroundColor3 = v2054.FarmOff }
+		v2058(TextButton4, v2486, 0.18):Play()
+	else
+		local function v2487()
+			LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-42, 1855, 25227)
+		end
+
+		pcall(v2487)
+		TextButton4.Text = "Start Farm"
+		local v2488 = { BackgroundColor3 = v2054.FarmOn }
+		v2058(TextButton4, v2488, 0.18):Play()
+	end
+end
+
+local function v2097()
+	v2096(not v2094)
+end
+
+TextButton4.MouseButton1Click:Connect(v2097)
+v2096(v2094)
+local Frame12 = Instance.new("Frame")
+Frame12.Name = v190[50]
+Frame12.BackgroundTransparency = 1
+Frame12.Size = UDim2.new(1, 0, 0, 46)
+Frame12.LayoutOrder = 6
+Frame12.Parent = Frame
+local UIListLayout5 = Instance.new("UIListLayout")
+UIListLayout5.FillDirection = Enum.FillDirection.Horizontal
+UIListLayout5.Padding = UDim.new(0, 12)
+UIListLayout5.SortOrder = Enum.SortOrder.LayoutOrder
+UIListLayout5.Parent = Frame12
+local TextButton5 = Instance.new("TextButton")
+TextButton5.Name = "HopServer"
+TextButton5.LayoutOrder = 1
+TextButton5.BackgroundColor3 = v2054.PanelAlt
+TextButton5.Size = UDim2.new(0.6666666666666666, -6, 1, 0)
+TextButton5.Font = Enum.Font.GothamBold
+TextButton5.Text = "Hop Server"
+TextButton5.TextColor3 = v2054.TextPrimary
+TextButton5.TextSize = 15
+TextButton5.AutoButtonColor = false
+v2055(TextButton5, 12)
+v2056(TextButton5, v2054.Stroke, 1)
+TextButton5.Parent = Frame12
+local TextButton6 = Instance.new("TextButton")
+TextButton6.Name = v190[32]
+TextButton6.LayoutOrder = 2
+TextButton6.BackgroundColor3 = v2054.PanelAlt
+TextButton6.Size = UDim2.new(0.3333333333333333, -6, 1, 0)
+TextButton6.Font = Enum.Font.GothamBold
+TextButton6.Text = "Render: On"
+TextButton6.TextColor3 = v2054.TextPrimary
+TextButton6.TextSize = 13
+TextButton6.AutoButtonColor = false
+TextButton6.ClipsDescendants = true
+v2055(TextButton6, 12)
+v2056(TextButton6, v2054.Stroke, 1)
+TextButton6.Parent = Frame12
+local v2098
+v2098 = not (getgenv().renderEnabled == nil)
+if v2098 then
+	v2098 = getgenv().renderEnabled
+end
+local v2099 = v2098
+if not v2098 then
+	v2099 = false
+end
+
+local function v2100(p2489)
+	v2099 = p2489
+	getgenv().renderEnabled = p2489
+
+	local function v2490()
+		game:GetService("RunService"):Set3dRenderingEnabled(p2489)
+	end
+
+	local v2491, v2492
+	v2492, v2491 = pcall(v2490)
+	if not v2492 then
+		warn(v190[3], v2491)
+	end
+	if p2489 then
+		TextButton6.Text = "Render: On"
+		local v2493 = { BackgroundColor3 = v2054.PanelAlt }
+		v2058(TextButton6, v2493, 0.18):Play()
+	else
+		TextButton6.Text = "Render: Off"
+		local v2494 = { BackgroundColor3 = v2054.Rose }
+		v2058(TextButton6, v2494, 0.18):Play()
+	end
+end
+
+local function v2101()
+	v2100(not v2099)
+end
+
+TextButton6.MouseButton1Click:Connect(v2101)
+local v2102
+v2102 = not (getgenv().renderEnabled == nil)
+v2102 = v2102 and getgenv().renderEnabled or false
+v2100(v2102)
+local Frame13 = Instance.new("Frame")
+Frame13.Name = "CreditsRow"
+Frame13.BackgroundTransparency = 1
+Frame13.Size = UDim2.new(1, 0, 0, 18)
+Frame13.LayoutOrder = 6
+Frame13.Parent = Frame
+local TextLabel10 = Instance.new("TextLabel")
+TextLabel10.Name = v190[47]
+TextLabel10.BackgroundTransparency = 1
+TextLabel10.Size = UDim2.new(1, 0, 1, 0)
+TextLabel10.Font = Enum.Font.Gotham
+TextLabel10.Text = "Copyright to: @zkayreal (Script Owner); @unauthorization. (Co-Owner); @invincible.samurai (Architect)"
+TextLabel10.TextColor3 = v2054.TextDim
+TextLabel10.TextSize = 13
+TextLabel10.TextXAlignment = Enum.TextXAlignment.Center
+TextLabel10.TextScaled = false
+TextLabel10.TextWrapped = true
+TextLabel10.Parent = Frame13
+local TweenService = game:GetService("TweenService")
+local v2103 = {}
+
+local function v2104()
+	local v2495 = 20
+	local v2496 = #v2103 - -1
+	while true do
+		v2496 = v2496 + -1
+		if 1 <= v2496 then
+			local v2497 = v2103[v2496]
+			local v2498 = TweenService
+			local Create2 = v2498.Create
+			local v2499 = TweenInfo.new(
+				0.3,
+				Enum.EasingStyle.Quart,
+				Enum.EasingDirection.Out
+			)
+			local v2500 = { Position = UDim2.new(1, -320, 1, -(v2495 + 64)) }
+			Create2(v2498, v2497, v2499, v2500):Play()
+			v2495 = v2495 + 64 + 10
+		else
+			break
+		end
+	end
+end
+
+local UIScale = Instance.new("UIScale")
+UIScale.Parent = Frame
+
+local function v2105()
+	local CurrentCamera = workspace.CurrentCamera
+	if not CurrentCamera then
+		return
+	end
+	local ViewportSize = CurrentCamera.ViewportSize
+	local v2513 = ViewportSize.X
+	local v2514 = ViewportSize.Y
+	UIScale.Scale = math.min(v2513 * 0.8 / 540, v2514 * 0.8 / 480)
+end
+
+v2105()
+
+local function v2106()
+	v2105()
+	if workspace.CurrentCamera then
+		workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(v2105)
+	end
+end
+
+workspace:GetPropertyChangedSignal(v190[38]):Connect(v2106)
+if workspace.CurrentCamera then
+	workspace.CurrentCamera:GetPropertyChangedSignal("ViewportSize"):Connect(v2105)
+end
+
+local function v2107()
+	local CoreGui2 = game:GetService("CoreGui")
+	local StarterGui = game:GetService("StarterGui")
+	local v2515 = table.create(3)
+	local v2516 = v190[29]
+	local v2517 = v190[30]
+	v2515[1] = v2516
+	v2515[2] = v2517
+	v2515[3] = "PlayerList"
+	for _, v2518 in ipairs(v2515) do
+		local v2519 = v2518
+
+		local function v2520()
+			local FindFirstChild = CoreGui2:FindFirstChild(v2519)
+			if FindFirstChild then
+				FindFirstChild:Destroy()
+			end
+		end
+
+		pcall(v2520)
+	end
+
+	local function v2521()
+		StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+	end
+
+	pcall(v2521)
+end
+
+local function v2108()
+	v2107()
+	while true do
+		local function v2522()
+			game:GetService("StarterGui"):SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+			local PlayerList = game:GetService("CoreGui"):FindFirstChild("PlayerList")
+			if PlayerList then
+				PlayerList:Destroy()
+			end
+		end
+
+		pcall(v2522)
+		task.wait(0.3)
+	end
+end
+
+task.spawn(v2108)
+v2107()
+if not getgenv().TimeFarmed then
+	getgenv().TimeFarmed = 0
+end
+local v2109 = getgenv().SavedCarriedKills
+if not v2109 then
+	v2109 = 0
+end
+local v2110 = getgenv().SavedEmotes
+if not v2110 then
+	v2110 = 0
+end
+local v2111 = getgenv().SavedSessionStart
+if not v2111 then
+	v2111 = os.time()
+end
+local GetService = game:GetService(v190[27])
+local Players2 = game:GetService("Players")
+local RunService2 = game:GetService("RunService")
+local GetService2 = game:GetService(v190[22])
+local GetService3 = game:GetService(v190[16])
+local GetService4 = game:GetService(v190[11])
+local LocalPlayer2 = Players2.LocalPlayer
+local v2112 = LocalPlayer2:FindFirstChild("leaderstats")
+local v2113 = v2110
+local v2114 = 0
+local v2115 = 0
+local v2116 = 0
+local v2117 = 0
+local v2118 = 0
+local v2119 = false
+local v2120, v2121
+local v2122 = false
+local v2123 = false
+local v2124 = false
+local v2125 = false
+local v2126, v2127, v2128, v2129, v2130, v2131, v2132, v2133
+local v2134, v2135
+if not v2112 then
+	v2113 = v2110
+	v2114 = 0
+	v2115 = 0
+	v2116 = 0
+	v2117 = 0
+	v2118 = 0
+	v2119 = false
+	v2120 = nil
+	v2121 = nil
+	v2122 = false
+	v2123 = false
+	v2124 = false
+	v2125 = false
+	v2126 = nil
+	v2127 = nil
+	v2128 = nil
+	v2129 = nil
+	v2130 = nil
+	v2131 = nil
+	v2132 = nil
+	v2133 = nil
+	v2134 = nil
+	v2135 = nil
+	v2112 = LocalPlayer2
+end
+
+local function v2136()
+	local v2523 = LocalPlayer2
+	v2523 = v2523 and LocalPlayer2.Name or "Unknown"
+	local v2524 = v2114
+	local v2525 = v2113
+	local v2526 = v2117
+	local v2527 = v2115
+	local v2528 = TextLabel3
+	if v2528 then
+		v2528 = TextLabel3.Text
+	end
+	local v2529 = {
+		title = v190[10],
+		color = 0,
+		description = string.format(
+			"**User:** ||%s||\n**Kills farmed:** %s\n**Emotes unlocked:** %s\n**Total kills:** %s\n**Kill / hr:** %s\n**Time farmed:** %s",
+			v2523,
+			tostring2(v2524),
+			tostring2(v2525),
+			tostring2(v2526),
+			tostring2(v2527),
+			v2528
+		),
+		timestamp = DateTime.now():ToIsoDate()
+	}
+	local v2530 = {}
+	local v2531 = { v2529 }
+	v2530.embeds = v2531
+
+	local function v2532()
+		local request4 = request
+		local v2535 = { Url = v2064.webhookUrl, Method = "POST" }
+		local v2536 = { ["Content-Type"] = v190[23] }
+		v2535.Headers = v2536
+		v2535.Body = HttpService2:JSONEncode(v2530)
+		return (request4(v2535))
+	end
+
+	local v2533, v2534
+	v2534, v2533 = pcall(v2532)
+	if not v2534 then
+		warn(v190[7] .. tostring2(v2533))
+	end
+	return v2534, v2533
+end
+
+v2126 = v2136
+TextButton3.MouseButton1Click:Connect(v2126)
+workspace.FallenPartsDestroyHeight = (0/0)
+local workspace3 = workspace
+local GetPropertyChangedSignal = workspace3.GetPropertyChangedSignal
+v2126 = v190[6]
+local v2137 = GetPropertyChangedSignal(workspace3, v2126)
+
+v2126 = function()
+	local FallenPartsDestroyHeight = workspace.FallenPartsDestroyHeight
+	if FallenPartsDestroyHeight == FallenPartsDestroyHeight then
+		workspace.FallenPartsDestroyHeight = (0/0)
+	end
+end
+
+v2137:Connect(v2126)
+local new = Instance.new
+v2126 = "Part"
+v2127 = workspace
+local v2138 = new(v2126, v2127)
+v2126 = CFrame
+v2126 = v2126.new
+v2127 = 0
+v2128 = -10008
+v2126 = v2126(v2127, v2128, 0)
+v2138.CFrame = v2126
+v2138.Anchored = true
+v2126 = Vector3
+v2126 = v2126.new
+v2127 = 2048
+v2128 = 10
+v2126 = v2126(v2127, v2128, 2048)
+v2138.Size = v2126
+v2138.Transparency = 0.5
+v2138.CanCollide = true
+v2126 = game
+v2127 = v2126
+v2126 = v2126.GetService
+v2128 = "HttpService"
+v2126 = v2126(v2127, v2128)
+v2127 = v2126
+v2126 = v2126.GenerateGUID
+v2126 = v2126(v2127)
+v2138.Name = v2126
+v2126 = 100
+v2127 = nil
+v2128 = nil
+
+local function v2139(p2537)
+	if not p2537 then
+		return
+	end
+	local Humanoid2 = p2537:FindFirstChildOfClass("Humanoid")
+	if not Humanoid2 then
+		Humanoid2 = p2537:WaitForChild("Humanoid", 3)
+	end
+	local v2538 = p2537:FindFirstChild(v190[20])
+	if not v2538 then
+		v2538 = p2537:WaitForChild(v190[20], 3)
+	end
+	if not (Humanoid2 and v2538) then
+		return
+	end
+	v2126 = Humanoid2.Health
+	if v2127 then
+		v2127:Disconnect()
+		v2127 = nil
+	end
+	if v2128 then
+		v2128:Disconnect()
+		v2128 = nil
+	end
+	local v2539 = Humanoid2
+
+	local function v2540()
+		local FindFirstChild2 = p2537:FindFirstChild(v190[20])
+		if FindFirstChild2 then
+			v2126 = v2539.Health
+			v2138.CFrame = CFrame.new(
+				FindFirstChild2.Position.X,
+				-10008,
+				FindFirstChild2.Position.Z
+			)
+		end
+	end
+
+	v2128 = RunService2.RenderStepped:Connect(v2540)
+	local v2541 = Humanoid2
+
+	local function v2542(p2543)
+		local FindFirstChild3 = p2537:FindFirstChild(v190[20])
+		if p2543 <= 0 and FindFirstChild3 and FindFirstChild3.CFrame.Y <= 0 then
+			v2541.Health = v2126
+		end
+	end
+
+	v2127 = Humanoid2.HealthChanged:Connect(v2542)
+end
+
+v2139(LocalPlayer2.Character)
+
+local function v2140(p2544)
+	task.wait(0.1)
+	v2139(p2544)
+end
+
+LocalPlayer2.CharacterAdded:Connect(v2140)
+local v2141 = {}
+local setmetatable6 = setmetatable
+local v2142 = { __mode = "k" }
+local v2143 = setmetatable6({}, v2142)
+
+local function v2144(p2545)
+	if not p2545 then
+		return nil
+	end
+	local FindFirstChild4 = p2545:FindFirstChild(v190[24])
+	if FindFirstChild4 then
+		return FindFirstChild4
+	end
+	local Folder = Instance.new("Folder")
+	Folder.Name = v190[24]
+
+	local function v2546()
+		Folder:SetAttribute("ZKAYOwned", true)
+	end
+
+	pcall(v2546)
+	Folder.Parent = p2545
+	v2143[Folder] = true
+	return Folder
+end
+
+local function v2145(p2547)
+	if not p2547 then
+		return
+	end
+	v2144(p2547)
+
+	local function v2548(p2549)
+		if p2549.Name == v190[24] then
+			task.defer(v2144, p2547)
+		end
+	end
+
+	local Connect = p2547.ChildRemoved:Connect(v2548)
+	table.insert(v2141, Connect)
+end
+
+v2129 = v2145
+v2130 = LocalPlayer2.Character
+v2129(v2130)
+v2129 = table
+v2129 = v2129.insert
+v2130 = v2141
+v2131 = LocalPlayer2.CharacterAdded
+v2132 = v2131
+v2131 = v2131.Connect
+
+v2133 = function(p2550)
+	task.wait(0.1)
+	v2145(p2550)
+end
+
+v2129(v2130, v2131(v2132, v2133))
+v2129 = false
+v2130 = nil
+v2131 = nil
+v2132 = nil
+v2133 = {}
+local Model = Instance.new("Model", workspace)
+v2134 = Model
+local Humanoid = Instance.new("Humanoid", v2134)
+v2134 = "Part"
+local v2146 = Instance.new(v2134, Model)
+v2134 = v190[20]
+v2146.Name = v2134
+v2146.CanCollide = false
+v2146.Transparency = 1
+v2146.Anchored = true
+v2134 = Vector3
+v2134 = v2134.new
+v2134 = v2134(2, 2, 1)
+v2146.Size = v2134
+v2134 = getgenv
+v2134 = v2134()
+v2134.InvisHumanoid = Humanoid
+v2134 = getgenv
+v2134 = v2134()
+v2134.InvisPart30 = v2146
+v2134 = false
+
+local function v2147(...)
+	if not v2134 then
+		return
+	end
+	v2134 = false
+	getgenv().InvisActive = false
+	v2129 = false
+	if v2130 then
+		local function v2551()
+			if v2130.IsPlaying then
+				v2130:Stop()
+			end
+		end
+
+		pcall(v2551)
+		v2130 = nil
+	end
+	v2131 = nil
+	local Character = LocalPlayer2.Character
+	if Character then
+		local FindFirstChild5 = Character:FindFirstChild(v190[20])
+		if FindFirstChild5 and v2132 then
+			local function v2552()
+				FindFirstChild5.CFrame = v2132
+			end
+
+			pcall(v2552)
+		end
+		v2132 = nil
+		local Humanoid3 = Character:FindFirstChildOfClass("Humanoid")
+		if Humanoid3 then
+			local function v2553()
+				workspace.CurrentCamera.CameraSubject = Humanoid3
+			end
+
+			pcall(v2553)
+		end
+
+		local function v2554()
+			Character:SetAttribute("NoHeadLerp", false)
+		end
+
+		pcall(v2554)
+		for _, v2555 in pairs2(v2133) do
+			local v2556 = v2555
+
+			local function v2557()
+				v2556:Disconnect()
+			end
+
+			pcall(v2557)
+		end
+		v2133 = {}
+		for _, v2558 in pairs2(Character:GetDescendants()) do
+			if v2558:IsA("BasePart") and v2558.Name ~= v190[20] then
+				v2558.LocalTransparencyModifier = 0
+			end
+		end
+	end
+end
+
+local function v2148()
+	if v2130 then
+		local function v2559()
+			if v2130.IsPlaying then
+				v2130:Stop()
+			end
+		end
+
+		pcall(v2559)
+		v2130 = nil
+	end
+	v2131 = nil
+	v2132 = nil
+	v2129 = false
+end
+
+local function v2149(p2560)
+	if not p2560:IsA("BasePart") then
+		return
+	end
+	if p2560.Name == v190[20] then
+		return
+	end
+	if p2560.Transparency == 1 then
+		return
+	end
+	if p2560.Name:lower():find("hitbox") then
+		return
+	end
+	p2560.LocalTransparencyModifier = 0.5
+
+	local function v2561()
+		if not v2134 then
+			return
+		end
+		if p2560.LocalTransparencyModifier ~= 0.5 then
+			p2560.LocalTransparencyModifier = 0.5
+		end
+	end
+
+	local Connect2 = p2560:GetPropertyChangedSignal("LocalTransparencyModifier"):Connect(v2561)
+	table.insert(v2133, Connect2)
+end
+
+local function v2150(p2562)
+	for _, v2563 in pairs2(p2562:GetDescendants()) do
+		v2149(v2563)
+	end
+
+	local function v2564(p2565)
+		if v2134 then
+			v2149(p2565)
+		end
+	end
+
+	local Connect3 = p2562.DescendantAdded:Connect(v2564)
+	table.insert(v2133, Connect3)
+end
+
+local function v2151()
+	if v2134 then
+		v2147()
+		return
+	end
+	local Character2 = LocalPlayer2.Character
+	if not Character2 then
+		return
+	end
+	if not (Character2:FindFirstChildOfClass("Humanoid") and
+		Character2:FindFirstChild(v190[20])) then
+		return
+	end
+	v2134 = true
+	getgenv().InvisActive = true
+	v2129 = false
+	local Character3 = LocalPlayer2.Character
+	if Character3 then
+		v2150(Character3)
+	end
+end
+
+local function v2152()
+	if not v2094 then
+		return
+	end
+	if v2122 or v2125 then
+		getgenv().desync = nil
+	end
+	local v2566
+	v2566 = not (getgenv().desync == nil)
+	if not (v2134 or v2566) then
+		return
+	end
+	if v2129 then
+		return
+	end
+	v2129 = true
+	local Character4 = LocalPlayer2.Character
+	local v2567
+	if Character4 then
+		v2567 = Character4:FindFirstChildOfClass("Humanoid")
+	else
+		v2567 = Character4
+	end
+	local v2568
+	if Character4 then
+		v2568 = Character4:FindFirstChild(v190[20])
+	else
+		v2568 = Character4
+	end
+	if not (Character4 and v2567 and v2568) then
+		v2129 = false
+		return
+	end
+	if v2567.Health <= 0 then
+		if v2134 then
+			task.spawn(v2148)
+		end
+		v2129 = false
+		return
+	end
+	local CFrame2 = v2568.CFrame
+	local Velocity = v2568.Velocity
+	v2132 = CFrame2
+	local CurrentCamera2 = workspace.CurrentCamera
+	local v2569 = nil
+	if v2134 then
+		v2569 = CFrame2
+	end
+	if v2566 and not LocalPlayer2.Character:FindFirstChild(v190[17]) then
+		local v2570 = getgenv().desync.CFrame
+		if not v2570 then
+			v2570 = v2569
+		end
+		v2569 = v2570
+	end
+	if v2569 then
+		if CurrentCamera2 and not (v2134 and not v2566) then
+			Character4:SetAttribute("NoHeadLerp", true)
+			CurrentCamera2.CameraSubject = Humanoid
+		end
+		if v2119 and v2120 then
+			v2146.CFrame = v2120
+		else
+			v2146.CFrame = CFrame2
+		end
+		v2568.CFrame = v2569
+	end
+	local v2571 = nil
+	if v2134 then
+		if v2131 ~= v2567 then
+			if v2130 then
+				local function v2572()
+					if v2130.IsPlaying then
+						v2130:Stop()
+					end
+					v2130:Destroy()
+				end
+
+				pcall(v2572)
+				v2130 = nil
+			end
+			v2131 = v2567
+		end
+		local Animator = v2567:FindFirstChildOfClass("Animator")
+		if Animator then
+			if not (v2130 and v2130.Parent ~= nil) then
+				local Animation = Instance.new("Animation")
+				Animation.AnimationId = "rbxassetid://71181015443030"
+				v2130 = Animator:LoadAnimation(Animation)
+				v2130.Priority = Enum.AnimationPriority.Action4
+				v2130:Play()
+				v2130:AdjustSpeed(0)
+				v2130:AdjustWeight(2000000000)
+			end
+			v2571 = v2130
+			v2571.TimePosition = 13.45
+		end
+	end
+	RunService2.RenderStepped:Wait()
+	Humanoid.CameraOffset = v2567.CameraOffset
+	if CurrentCamera2 and CurrentCamera2.CameraSubject == Humanoid then
+		Character4:SetAttribute("NoHeadLerp", false)
+		CurrentCamera2.CameraSubject = v2567
+	end
+	local v2573 = v2571
+	if v2571 then
+		v2573 = v2571
+		if v2571.IsPlaying then
+			local function v2574()
+				v2573:Stop()
+			end
+
+			pcall(v2574)
+		end
+	end
+	if v2569 then
+		if v2119 and v2120 then
+			v2568.CFrame = v2120
+		elseif CurrentCamera2 and
+			GetService2.MouseBehavior == Enum.MouseBehavior.LockCenter and not v2566 and not (v2134 and not v2566) then
+			local LookVector = CurrentCamera2.CFrame.LookVector
+			local v2575 = Vector3.new(LookVector.X, 0, LookVector.Z)
+			if 0.001 < v2575.Magnitude then
+				v2568.CFrame = CFrame.new(
+					CFrame2.Position,
+					CFrame2.Position + v2575
+				)
+			else
+				v2568.CFrame = CFrame2
+			end
+		else
+			v2568.CFrame = CFrame2
+		end
+	end
+	v2568.Velocity = Velocity
+	v2129 = false
+end
+
+RunService2.Heartbeat:Connect(v2152)
+v2151()
+
+local function v2153()
+	local function v2576(p2578)
+		repeat
+			task.wait()
+		until LocalPlayer2.Character == p2578 and p2578:FindFirstChild(v190[20]) and
+			p2578:FindFirstChildOfClass("Humanoid")
+		if LocalPlayer2.Character ~= p2578 then
+			return
+		end
+		local FindFirstChild6 = p2578:FindFirstChild(v190[20])
+
+		local function v2579()
+			while true do
+				local _continue97 = false
+				if task.wait() and
+					not (LocalPlayer2.Character and LocalPlayer2.Character ~= p2578) then
+					if getgenv().desync and not p2578:FindFirstChild(v190[17]) then
+						local v2581 = {}
+
+						local function v2582()
+							return (GetService3.Resources.NinjaUlt.Afterimage_Despawn:Clone())
+						end
+
+						local v2583, v2584
+						v2584, v2583 = pcall(v2582)
+
+						local function v2585()
+							return (GetService3.Resources.VanishingKick.tpthing:Clone())
+						end
+
+						local v2586, v2587
+						v2587, v2586 = pcall(v2585)
+						if v2584 and v2583 then
+							v2583.Parent = FindFirstChild6
+							v2581[1] = v2583
+							for _, v2588 in pairs2(v2583:GetChildren()) do
+								if v2588:IsA(v190[25]) then
+									v2588.Enabled = true
+									v2588.Rate = 100
+								end
+							end
+						end
+						if v2587 and v2586 then
+							v2586.Parent = FindFirstChild6
+							v2581[2] = v2586
+							v2586.Enabled = true
+							v2586.Rate = 100
+						end
+						while true do
+							if v2581[1] and v2581[1].Parent then
+								v2581[1].CFrame = FindFirstChild6.CFrame
+							end
+							RunService2.RenderStepped:Wait()
+							if not (getgenv().desync and
+								not p2578:FindFirstChild(v190[17])) then
+								local v2589, v2590, v2591
+								v2591, v2590, v2589 = pairs2(v2581)
+								while true do
+									local v2592
+									v2589, v2592 = v2591(v2590, v2589)
+									if v2589 == nil then
+										_continue97 = true
+										break
+									else
+										local v2593 = v2592
+
+										local function v2594()
+											v2593:Destroy()
+										end
+
+										pcall(v2594)
+									end
+								end
+								if _continue97 then
+									break
+								end
+							end
+						end
+					end
+				else
+					break
+				end
+			end
+		end
+
+		task.spawn(v2579)
+
+		local function v2580()
+			for _, v2595 in pairs2(p2578:GetDescendants()) do
+				if v2595:IsA("BasePart") and v2595 ~= FindFirstChild6 and
+					not (v2595.Transparency == 1 or v2595.Name:lower():find("hitbox")) then
+					local v2596 = v2595
+
+					local function v2597()
+						while task.wait() and
+							not (LocalPlayer2.Character and
+								LocalPlayer2.Character ~= p2578) do
+							if v2596 and
+								(v2134 or
+									getgenv().desync and
+										not p2578:FindFirstChild(v190[17])) then
+								v2596.Transparency = 0.5
+								repeat
+									RunService2.RenderStepped:Wait()
+								until not ((v2134 or
+									getgenv().desync and
+										not p2578:FindFirstChild(v190[17])) and
+									not (LocalPlayer2.Character and
+										LocalPlayer2.Character ~= p2578))
+								v2596.Transparency = 0
+							end
+						end
+					end
+
+					task.spawn(v2597)
+				end
+			end
+		end
+
+		task.spawn(v2580)
+	end
+
+	if LocalPlayer2.Character then
+		task.spawn(v2576, LocalPlayer2.Character)
+	end
+
+	local function v2577(p2598)
+		task.spawn(v2576, p2598)
+	end
+
+	LocalPlayer2.CharacterAdded:Connect(v2577)
+end
+
+task.spawn(v2153)
+local Lighting = game:GetService("Lighting")
+local Workspace = game:GetService("Workspace")
+local Terrain = workspace2:FindFirstChildOfClass("Terrain")
+
+local function v2154(p2599, p2600)
+	local function v2601()
+		p2599:Connect(p2600)
+	end
+
+	pcall(v2601)
+end
+
+local v2155 = {}
+
+v2135 = function()
+	local v2602 = Color3.fromRGB(0, 85, 190)
+
+	local function v2603(p2605)
+		if p2605:IsA("Trail") then
+			p2605.Color = ColorSequence.new(v2602)
+			p2605.Texture = ""
+			p2605.LightEmission = 0.8
+		elseif p2605:IsA(v190[25]) then
+			p2605.Color = ColorSequence.new(v2602)
+			p2605.LightEmission = 0.75
+		end
+	end
+
+	local function v2604(p2606)
+		for _, v2607 in ipairs(p2606:GetDescendants()) do
+			if v2607:IsA("Trail") or v2607:IsA(v190[25]) then
+				v2603(v2607)
+			end
+		end
+
+		local function v2608(p2609)
+			if p2609:IsA("Trail") or p2609:IsA(v190[25]) then
+				v2603(p2609)
+			end
+		end
+
+		v2154(p2606.DescendantAdded, v2608)
+	end
+
+	if LocalPlayer2.Character then
+		v2604(LocalPlayer2.Character)
+	end
+	v2154(LocalPlayer2.CharacterAdded, v2604)
+end
+
+v2155[1] = v2135
+
+v2135 = function()
+	local v2610 = {
+		Bk = 92959017845968,
+		Ft = 129304841254693,
+		Lf = 129249062260004,
+		Rt = 117319232583147,
+		Up = 121193772599100,
+		Dn = 115022734343595
+	}
+	for _, v2611 in ipairs(Lighting:GetChildren()) do
+		if v2611:IsA("Sky") then
+			v2611:Destroy()
+		end
+	end
+	local Sky = Instance.new("Sky")
+	for v2612, v2613 in pairs2(v2610) do
+		Sky["Skybox" .. v2612] = "rbxassetid://" .. v2613
+	end
+	Sky.Parent = Lighting
+end
+
+v2155[2] = v2135
+
+v2135 = function()
+	Lighting.ClockTime = 12
+	Lighting.GlobalShadows = false
+	Lighting.Brightness = 0.8
+	Lighting.ExposureCompensation = -0.2
+	Lighting.FogStart = 9000000000
+	Lighting.FogEnd = 9000000000
+	for _, v2614 in ipairs(Lighting:GetChildren()) do
+		if v2614:IsA("PostEffect") or v2614:IsA(v190[41]) then
+			v2614.Enabled = false
+		end
+	end
+end
+
+v2155[3] = v2135
+
+v2135 = function()
+	local function v2615(p2616)
+		if p2616:IsA("Smoke") then
+			p2616:Destroy()
+		elseif p2616:IsA(v190[25]) then
+			local Model2 = p2616:FindFirstAncestorOfClass("Model")
+			if not (Model2 and Model2:FindFirstChild("Class") and
+				Model2.Class.Value == "Hero Hunter") then
+				p2616:Destroy()
+			end
+		end
+	end
+
+	v2154(Workspace.DescendantAdded, v2615)
+end
+
+v2155[4] = v2135
+
+v2135 = function()
+	if not Terrain then
+		return
+	end
+	for _, v2617 in ipairs(Terrain:GetChildren()) do
+		if v2617:IsA("Clouds") then
+			v2617.Enabled = false
+		end
+	end
+
+	local function v2618(p2619)
+		if p2619:IsA("Clouds") then
+			p2619.Enabled = false
+		end
+	end
+
+	v2154(Terrain.ChildAdded, v2618)
+end
+
+v2155[5] = v2135
+
+v2135 = function()
+	local function v2620()
+		local Sky2 = Lighting:FindFirstChildOfClass("Sky")
+		if Sky2 then
+			Sky2.SunAngularSize = 0
+			Sky2.SunTextureId = ""
+			Sky2.MoonAngularSize = 0
+			Sky2.MoonTextureId = ""
+		end
+	end
+
+	v2620()
+	local Atmosphere = Lighting:FindFirstChildOfClass("Atmosphere")
+	if Atmosphere then
+		Atmosphere.Density = 0
+		Atmosphere.Haze = 0
+		Atmosphere.Glare = 0
+	end
+
+	local function v2621(p2622)
+		if p2622:IsA("Sky") then
+			task.wait()
+			v2620()
+		elseif p2622:IsA("Atmosphere") then
+			p2622.Density = 0
+			p2622.Haze = 0
+			p2622.Glare = 0
+		end
+	end
+
+	v2154(Lighting.ChildAdded, v2621)
+end
+
+v2155[6] = v2135
+v2135 = task
+v2135 = v2135.spawn
+
+local function v2156()
+	local v2623 = { 1, 2, 3, 4, 5, 6 }
+	while 0 < #v2623 do
+		local v2624 = math.random(#v2623)
+		pcall(v2155[v2623[v2624]])
+		table.remove(v2623, v2624)
+	end
+end
+
+v2135(v2156)
+v2135 = pcall
+
+local function v2157()
+	v2064().Rendering.QualityLevel = Enum.QualityLevel.Level01
+end
+
+v2135(v2157)
+v2135 = false
+
+local function v2158(p2625)
+	if typeof(p2625) == "Instance" then
+		if p2625:IsA("Player") then
+			return p2625.Character
+		end
+		if p2625:IsA("Model") then
+			return p2625
+		end
+	end
+	return nil
+end
+
+local function v2159(p2626)
+	p2626 = p2626 and p2626:FindFirstChild(v190[20]) or nil
+	return p2626
+end
+
+local function v2160(p2627)
+	p2627 = p2627 and p2627:FindFirstChildOfClass("Humanoid") or nil
+	return p2627
+end
+
+local function v2161()
+	local GetPlayers = Players2:GetPlayers()
+	local v2628 = table.find(GetPlayers, LocalPlayer2)
+	if v2628 then
+		table.remove(GetPlayers, v2628)
+	end
+	return GetPlayers
+end
+
+local function v2162(p2629, p2630)
+	if not p2629 then
+		return false
+	end
+	for _, v2631 in pairs2(p2629:GetPlayingAnimationTracks()) do
+		if v2631.Animation.AnimationId:match(p2630) then
+			return true
+		end
+	end
+	return false
+end
+
+local function v2163()
+	local v2632 = nil
+	local v2633 = math.huge
+	for _, v2634 in ipairs(Players2:GetPlayers()) do
+		if not (v2634 == LocalPlayer2 or v2634 == v2121) then
+			local Character5 = v2634.Character
+			if Character5 and Character5:FindFirstChild(v190[20]) then
+				local Humanoid4 = Character5:FindFirstChildOfClass("Humanoid")
+				if Humanoid4 and Humanoid4.Health then
+					local Torso = Character5:FindFirstChild("Torso")
+					if Torso and Torso.Transparency ~= 1 and
+						not v2162(Humanoid4, "15128849047") and
+						not (Character5:FindFirstChildWhichIsA("ForceField") or
+							Character5:GetAttribute("Ulted") and
+								(Character5:GetAttribute("Character") == "Batter" or
+									Character5:GetAttribute("Character") == "Bald")) and
+						not Character5:FindFirstChild("Counter") then
+						local Position = Character5.HumanoidRootPart.Position
+						if -500 <= Position.X and Position.X <= 800 and -600 <= Position.Z and Position.Z <= 700 then
+							local Health = Humanoid4.Health
+							if 0 < Health and Health < v2633 then
+								v2632 = v2634
+								v2633 = Health
+							end
+						end
+					end
+				end
+			end
+		end
+	end
+	return v2632
+end
+
+local function v2164(p2635)
+	local Humanoid5 = p2635:WaitForChild("Humanoid")
+
+	local function v2636(p2640)
+		if (p2640.Name == "Ragdoll" or p2640.Name == "RagdollSim") and
+			not (v2135 or not (0 < Humanoid5.Health)) and
+			not p2635:FindFirstChild("ExtraHitbox") then
+			local function v2641()
+				repeat
+					v2135 = true
+					local v2642 = getgenv()
+					local v2643 = { CFrame = CFrame.new(9000000000, 9000000000, 9000000000) }
+					v2642.desync = v2643
+					task.wait()
+				until not (p2640.Parent == p2635 and not (Humanoid5.Health <= 0))
+				v2135 = false
+				getgenv().desync = nil
+			end
+
+			task.spawn(v2641)
+		end
+	end
+
+	p2635.DescendantAdded:Connect(v2636)
+
+	local function v2637()
+		local PlayerGui = LocalPlayer2:WaitForChild("PlayerGui")
+		if not PlayerGui then
+			return
+		end
+		local Hotbar = PlayerGui:WaitForChild("Hotbar")
+		if not Hotbar then
+			return
+		end
+		local Backpack = Hotbar:WaitForChild("Backpack")
+		if not Backpack then
+			return
+		end
+		local Hotbar2 = Backpack:WaitForChild("Hotbar")
+		if not Hotbar2 then
+			return
+		end
+		local WaitForChild = Hotbar2:WaitForChild("2")
+		if not WaitForChild then
+			return
+		end
+		local Base = WaitForChild:WaitForChild("Base")
+		if not Base then
+			return
+		end
+
+		local function v2644(p2645)
+			if p2645.Name == "Cooldown" and
+				LocalPlayer2.Character:GetAttribute("Ulted") then
+				local function v2646()
+					v2124 = true
+					task.wait(0.05)
+					v2124 = false
+				end
+
+				task.spawn(v2646)
+			end
+		end
+
+		Base.ChildAdded:Connect(v2644)
+	end
+
+	task.spawn(v2637)
+	local v2638 = {
+		["18464351556"] = true,
+		["18464372850"] = true,
+		["18464362124"] = true,
+		["136370737633649"] = true
+	}
+
+	local function v2639(p2647)
+		local AnimationId = p2647.Animation.AnimationId
+		local v2648 = "%d+"
+		local v2649 = v2648
+		local v2650, v2651, v2652, v2653
+		if v2638[AnimationId:match(v2648)] then
+			v2121 = v2163()
+			return
+		end
+
+		local function v2654(p2660)
+			if not (p2660 and p2660:IsA("Player")) then
+				return false
+			end
+			local v2661 = v2158(p2660)
+			if v2661 then
+				v2661 = v2661:GetAttribute("Character")
+			end
+			if v10(v2661) ~= "string" then
+				return false
+			end
+			local lower = v2661:lower()
+			local v2662
+			v2662 = lower == "hunter"
+			if not v2662 then
+				v2662 = lower == "blade"
+			end
+			if not v2662 then
+				v2662 = not (lower:find("zombie", 1, true) == nil)
+			end
+			return v2662
+		end
+
+		local function v2655(p2663)
+			local v2664 = nil
+
+			local function v2665()
+				if not p2663() then
+					v2664:Disconnect()
+					return
+				end
+				local v2666 = v2159(v2158(LocalPlayer2))
+				if v2666 then
+					v2666.AssemblyLinearVelocity = Vector3.new()
+					v2666.AssemblyAngularVelocity = Vector3.new()
+				end
+			end
+
+			v2664 = RunService2.Heartbeat:Connect(v2665)
+			return v2664
+		end
+
+		v2649 = nil
+		v2650 = nil
+		v2651 = nil
+		v2652 = nil
+		v2653 = false
+
+		local function v2656()
+			if v2649 then
+				v2649:Disconnect()
+				v2649 = nil
+			end
+			if v2650 then
+				v2650:Disconnect()
+				v2650 = nil
+			end
+			if sethiddenproperty then
+				if v2651 and v2651.Parent then
+					local function v2667()
+						sethiddenproperty(v2651, v190[14], nil)
+					end
+
+					pcall(v2667)
+				end
+				if v2652 and v2652.Parent then
+					local function v2668()
+						sethiddenproperty(v2652, v190[14], nil)
+					end
+
+					pcall(v2668)
+				end
+			end
+			if v2651 and v2651.Parent then
+				v2651.CFrame = CFrame.new(v2651.Position)
+				v2651.AssemblyLinearVelocity = Vector3.zero
+				v2651.AssemblyAngularVelocity = Vector3.zero
+
+				local function v2669()
+					v2651.Velocity = Vector3.zero
+				end
+
+				pcall(v2669)
+
+				local function v2670()
+					v2651.RotVelocity = Vector3.zero
+				end
+
+				pcall(v2670)
+				local Humanoid6 = v2651.Parent:FindFirstChildOfClass("Humanoid")
+				if Humanoid6 then
+					local function v2671()
+						Humanoid6.AutoRotate = true
+					end
+
+					pcall(v2671)
+				end
+			end
+			v2651 = nil
+			v2652 = nil
+		end
+
+		local function v2657()
+			v2656()
+		end
+
+		local function v2658(p2672, p2673)
+			if v2653 then
+				return
+			end
+			if v2649 then
+				v2649:Disconnect()
+				v2649 = nil
+			end
+			if v2651 and v2651.Parent then
+				v2651.AssemblyLinearVelocity = Vector3.zero
+				v2651.AssemblyAngularVelocity = Vector3.zero
+
+				local function v2674()
+					v2651.Velocity = Vector3.zero
+				end
+
+				pcall(v2674)
+
+				local function v2675()
+					v2651.RotVelocity = Vector3.zero
+				end
+
+				pcall(v2675)
+			end
+			if not (p2672 and p2673) then
+				return
+			end
+			v2651 = p2672
+			v2652 = p2673
+			if v2650 then
+				v2650:Disconnect()
+				v2650 = nil
+			end
+			local v2676 = p2672.Parent
+			if v2676 then
+				v2676 = p2672.Parent:FindFirstChildOfClass("Humanoid")
+			end
+			if v2676 then
+				local v2677 = v2676
+
+				local function v2678()
+					if v2677 and v2677.Parent then
+						local function v2683()
+							v2677.AutoRotate = false
+						end
+
+						pcall(v2683)
+					end
+				end
+
+				v2650 = RunService2.RenderStepped:Connect(v2678)
+			end
+			p2672.CFrame = p2673.CFrame * CFrame.new(0, 0, 5)
+			p2672.AssemblyLinearVelocity = Vector3.zero
+			p2672.AssemblyAngularVelocity = Vector3.zero
+			local sethiddenproperty2 = sethiddenproperty
+			local v2679 = sethiddenproperty2
+			if sethiddenproperty2 then
+				local function v2680()
+					sethiddenproperty(p2672, v190[14], p2672)
+				end
+
+				pcall(v2680)
+				local pcall4 = pcall
+
+				local function v2681()
+					sethiddenproperty(p2672, v190[14], p2673)
+				end
+
+				pcall4(v2681)
+				v2679 = pcall4
+			end
+			v2679 = nil
+
+			local function v2682()
+				if p2672 and p2672.Parent and (p2673 and p2673.Parent) then
+					p2672.CFrame = p2673.CFrame * CFrame.new(0, 0, 5)
+					p2672.AssemblyLinearVelocity = Vector3.zero
+					p2672.AssemblyAngularVelocity = Vector3.zero
+					if sethiddenproperty then
+						local function v2684()
+							sethiddenproperty(p2672, v190[14], p2673)
+						end
+
+						pcall(v2684)
+					end
+					return
+				end
+				v2679:Disconnect()
+				if v2649 == v2679 then
+					v2649 = nil
+				end
+				if sethiddenproperty then
+					if p2672 and p2672.Parent then
+						local function v2685()
+							sethiddenproperty(p2672, v190[14], nil)
+						end
+
+						pcall(v2685)
+					end
+					if p2673 and p2673.Parent then
+						local function v2686()
+							sethiddenproperty(p2673, v190[14], nil)
+						end
+
+						pcall(v2686)
+					end
+				end
+				if p2672 and p2672.Parent then
+					p2672.AssemblyLinearVelocity = Vector3.zero
+					p2672.AssemblyAngularVelocity = Vector3.zero
+
+					local function v2687()
+						p2672.Velocity = Vector3.zero
+					end
+
+					pcall(v2687)
+
+					local function v2688()
+						p2672.RotVelocity = Vector3.zero
+					end
+
+					pcall(v2688)
+				end
+			end
+
+			v2679 = RunService2.Heartbeat:Connect(v2682)
+			v2649 = v2679
+		end
+
+		if AnimationId:match("18896229321") then
+			task.wait(0.01)
+			if not v2124 then
+				return
+			end
+			v2653 = false
+			getgenv().desync = nil
+			v2125 = true
+
+			local function v2659(...)
+				local v2689 = v2158(LocalPlayer2)
+				if not v2689 then
+					return
+				end
+				if v2689:GetAttribute("Character") ~= "Purple" then
+					return
+				end
+				local v2690 = tick()
+				local v2691 = tick()
+
+				local function v2692(p2726)
+					return (p2726:match("%d+"))
+				end
+
+				local function v2693()
+					for _, v2727 in ipairs(LocalPlayer2.Character.Humanoid.Animator:GetPlayingAnimationTracks()) do
+						if v2692(v2727.Animation.AnimationId) == "18896229321" then
+							return v2727
+						end
+					end
+					return nil
+				end
+
+				local v2694 = v2693()
+				local v2695, v2696
+				while true do
+					v2696 = true
+					v2695 = v2694
+					if v2694 then
+						break
+					else
+						task.wait()
+						v2694 = v2693()
+					end
+				end
+
+				local function v2697()
+					repeat
+						task.wait()
+						v2695 = v2693()
+					until not (v2695 and not (2.3333333333333335 <= v2695.TimePosition) and
+						not (v2691 + 2.2 <= tick()))
+					v2653 = true
+					if not v2158(LocalPlayer2) then
+						return
+					end
+
+					local function v2728()
+						LocalPlayer2.Character.HumanoidRootPart.CFrame = CFrame.new(150, 441, 32)
+					end
+
+					pcall(v2728)
+					v2123 = true
+
+					local function v2729()
+						LocalPlayer2.Character.HumanoidRootPart.CFrame = CFrame.new(0, -29000, 0)
+					end
+
+					pcall(v2729)
+					task.wait(1.5)
+
+					local function v2730()
+						LocalPlayer2.Character.HumanoidRootPart.CFrame = CFrame.new(150, 441, 32)
+					end
+
+					pcall(v2730)
+					v2125 = false
+					task.wait(5)
+
+					local function v2731()
+						LocalPlayer2.Character.HumanoidRootPart.CFrame = CFrame.new(-42, 1855, 25227)
+					end
+
+					pcall(v2731)
+				end
+
+				task.spawn(v2697)
+
+				local function v2698()
+					return v2696
+				end
+
+				v2655(v2698)
+				local v2699 = {}
+				local v2700 = tick()
+				local v2701 = v2158(LocalPlayer2)
+				if v2701 then
+					v2701 = v2159(v2701)
+				end
+				local v2702 = nil
+				local v2703 = v2700
+				local v2704, v2705, v2706
+				if v2701 then
+					v2702 = nil
+					v2703 = v2700
+					v2704 = v2701.CFrame
+					v2705 = nil
+					v2706 = nil
+				end
+
+				local function v2707(p2732)
+					if not p2732 then
+						return nil
+					end
+					if p2732:IsA("Player") then
+						return (v2158(p2732))
+					end
+					return nil
+				end
+
+				local function v2708(p2733)
+					return (v2160(v2707(p2733)))
+				end
+
+				local function v2709(p2734)
+					return (v2159(v2707(p2734)))
+				end
+
+				local function v2710(p2735)
+					if not p2735 then
+						return false
+					end
+					if p2735:FindFirstChild("ForceField") then
+						return true
+					end
+					if p2735:FindFirstChild(v190[17]) then
+						return true
+					end
+					if p2735:FindFirstChild(v190[45]) then
+						return true
+					end
+					if p2735:FindFirstChild(v190[39]) then
+						return true
+					end
+					if p2735:FindFirstChild(v190[37]) then
+						return true
+					end
+					if p2735:FindFirstChild("forcefield") then
+						return true
+					end
+					return false
+				end
+
+				local function v2711(p2736)
+					local v2737 = v2707(p2736)
+					local v2738
+					if v2737 then
+						v2738 = v2160(v2737)
+					else
+						v2738 = v2737
+					end
+					local v2739
+					if v2737 then
+						v2739 = v2159(v2737)
+					else
+						v2739 = v2737
+					end
+					if not (v2737 and v2738 and v2739) then
+						return true
+					end
+					if v2738.Health <= 0 then
+						return true
+					end
+					if p2736:IsA("Player") then
+						if v2710(v2737) then
+							return true
+						end
+						if v2737:FindFirstChild("Counter") then
+							return true
+						end
+						if v2162(v2738, "15128849047") then
+							return true
+						end
+						if v2737:GetAttribute("Ulted") and
+							v2737:GetAttribute("Character") == "Batter" then
+							return true
+						end
+					end
+					local Position2 = v2737.HumanoidRootPart.Position
+					if -500 <= Position2.X and Position2.X <= 800 and
+						(-600 <= Position2.Z and Position2.Z <= 700) then
+						return false
+					end
+					return true
+				end
+
+				local function v2712(p2740)
+					local v2741 = v2708(p2740)
+					if v2741 then
+						local v2742 = v2162(v2741, "18896222853")
+						if v2742 then
+							v2741 = v2742
+						else
+							v2741 = v2162(v2741, "137434257516014")
+						end
+					end
+					return v2741
+				end
+
+				local function v2713(p2743)
+					if not (p2743 and p2743:IsA("Player")) then
+						return false
+					end
+					local v2744 = v2158(p2743)
+					local v2745
+					if v2744 then
+						v2745 = v2160(v2744)
+					else
+						v2745 = v2744
+					end
+					if not (v2744 and v2745) then
+						return false
+					end
+					if v2745.Health <= 0 then
+						return false
+					end
+					if v2162(v2745, "15128849047") then
+						return false
+					end
+					return (v2710(v2744))
+				end
+
+				local function v2714()
+					local FindFirstChild7 = workspace.Live:FindFirstChild(v190[44])
+					if not FindFirstChild7 then
+						return nil
+					end
+					local v2746 = v2160(FindFirstChild7)
+					if v2746 and not (v2746.Health <= 0) then
+						return FindFirstChild7
+					end
+					return nil
+				end
+
+				local function v2715(p2747)
+					local v2748 = {}
+					local v2749 = {}
+					for _, v2750 in pairs2(v2161()) do
+						if not (v2750 == p2747 or v2699[v2750] or
+							(v2711(v2750) or v2712(v2750) or not v2709(v2750))) then
+							if v2654(v2750) then
+								table.insert(v2748, v2750)
+							else
+								table.insert(v2749, v2750)
+							end
+						end
+					end
+					if 0 < #v2748 then
+						return v2748[math.random(1, #v2748)]
+					end
+					if 0 < #v2749 then
+						return v2749[math.random(1, #v2749)]
+					end
+					local v2751 = v2714()
+					if v2751 and v2751 ~= p2747 and not v2699[v2751] then
+						return v2751
+					end
+					return nil
+				end
+
+				local function v2716()
+					local v2755 = v2158(LocalPlayer2)
+					if v2755 then
+						v2755 = v2160(v2755)
+					end
+					if v2755 then
+						local v2756 = v2755
+
+						local function v2757()
+							v2756.AutoRotate = true
+						end
+
+						pcall(v2757)
+					end
+				end
+
+				local function v2717()
+					for _, v2758 in pairs2(v2161()) do
+						if not (v2699[v2758] or not v2713(v2758)) then
+							return true
+						end
+					end
+					return false
+				end
+
+				v2705 = false
+
+				local function v2718()
+					if v2705 then
+						return
+					end
+					v2705 = true
+					v2656()
+					v2716()
+					if _ffWatchConn then
+						local function v2759()
+							_ffWatchConn:Disconnect()
+						end
+
+						pcall(v2759)
+					end
+					if _dummyRespawnConn then
+						local function v2760()
+							_dummyRespawnConn:Disconnect()
+						end
+
+						pcall(v2760)
+					end
+					if _currentTargetAnimConn then
+						local function v2761()
+							_currentTargetAnimConn:Disconnect()
+						end
+
+						pcall(v2761)
+						_currentTargetAnimConn = nil
+					end
+					v2696 = false
+					v2657()
+				end
+
+				v2706 = nil
+				local v2719
+
+				v2719 = function(p2762)
+					if v2706 then
+						local function v2763()
+							v2706:Disconnect()
+						end
+
+						pcall(v2763)
+						v2706 = nil
+					end
+					v2656()
+					v2702 = p2762
+					v2703 = tick()
+					if p2762 then
+						local v2764 = v2158(LocalPlayer2)
+						if v2764 then
+							v2764 = v2159(v2764)
+						end
+						local v2765 = v2709(p2762)
+						if v2764 and v2765 then
+							v2658(v2764, v2765)
+							local v2766 = v2708(p2762)
+							if v2766 then
+								local v2767 = v2766:FindFirstChildOfClass("Animator")
+								v2767 = v2767 and v2767.AnimationPlayed or v2766.AnimationPlayed
+
+								local function v2768(p2769)
+									local AnimationId2 = p2769.Animation.AnimationId
+									if AnimationId2:match("18896222853") or
+										AnimationId2:match("137434257516014") then
+										if not v2696 then
+											return
+										end
+										local v2770 = v2702
+										if not v2770 then
+											return
+										end
+										v2699[v2770] = true
+										v2656()
+										local v2771 = v2715(v2770)
+										if v2771 then
+											v2719(v2771)
+											if v2715(v2771) == nil and not v2717() then
+												task.wait(0.1)
+												v2699[v2771] = true
+												_everybodyDone = true
+												v2718()
+											end
+										elseif v2717() then
+											v2656()
+											v2702 = nil
+										else
+											_everybodyDone = true
+											v2718()
+										end
+									end
+								end
+
+								v2706 = v2767:Connect(v2768)
+							end
+						end
+					end
+				end
+
+				local function v2720(p2772)
+					if p2772.Name == v190[44] then
+						v2699[p2772] = nil
+					end
+				end
+
+				workspace.Live.ChildAdded:Connect(v2720)
+
+				local function v2721(...)
+					for _, v2773 in pairs2(v2161()) do
+						if v2699[v2773] then
+							local v2774 = v2158(v2773)
+							if v2774 then
+								v2774 = v2160(v2774)
+							end
+							if v2774 and v2774 and
+								(0 < v2774.Health and not v2710(v2774)) then
+								v2699[v2773] = nil
+								if not v2702 then
+									v2719(v2773)
+								end
+							end
+						end
+					end
+				end
+
+				RunService2.RenderStepped:Connect(v2721)
+				local v2722 = v2715(nil)
+				if v2722 then
+					v2719(v2722)
+					if v2715(v2722) == nil then
+						task.wait(0.1)
+						v2699[v2722] = true
+						v2718()
+						return
+					end
+				end
+				while p2647.IsPlaying and tick() < v2690 + 3 do
+					if v2653 then
+						v2718()
+						break
+					end
+					RunService2.Heartbeat:Wait()
+					local v2723 = tick()
+					local v2724 = false
+					if v2702 then
+						if v2711(v2702) then
+							if not v2713(v2702) then
+								v2699[v2702] = true
+							end
+							v2724 = true
+						elseif 0.8 <= v2723 - v2703 then
+							v2699[v2702] = true
+							v2724 = true
+						end
+					else
+						v2724 = true
+					end
+					if v2724 then
+						local v2725 = v2715(v2702)
+						if v2725 then
+							v2719(v2725)
+							if v2715(v2725) == nil and not v2717() then
+								task.wait(0.1)
+								v2699[v2725] = true
+								v2718()
+								break
+							end
+						else
+							if not v2717() then
+								v2718()
+								break
+							end
+							v2656()
+							v2702 = nil
+						end
+					end
+				end
+				v2718()
+			end
+
+			task.spawn(v2659)
+		end
+	end
+
+	Humanoid5.AnimationPlayed:Connect(v2639)
+end
+
+local v2165 = v2112
+local v2166 = v2109
+local v2167 = v2111
+
+local function v2168()
+	local WaitForChild2 = v2165:WaitForChild("Total Kills")
+	local v2775 = LocalPlayer2:GetAttribute(v190[40])
+	local Value = WaitForChild2.Value
+	v2116 = WaitForChild2.Value - v2166
+	while true do
+		task.wait(0.25)
+		v2117 = WaitForChild2.Value
+		v2114 = v2117 - v2116
+		v2118 = v2117 - Value
+		local GetAttribute = LocalPlayer2:GetAttribute(v190[40])
+		if GetAttribute ~= v2775 then
+			v2113 = v2113 + 1
+			v2775 = GetAttribute
+		end
+		local v2776 = math.max(os.time() - v2167, 1)
+		v2115 = math.floor(v2114 / (v2776 / 3600))
+		v2076.Text = tostring2(v2114)
+		v2077.Text = tostring2(v2115)
+		v2078.Text = tostring2(v2113)
+		v2079.Text = tostring2(v2117)
+	end
+end
+
+task.spawn(v2168)
+
+local function v2169()
+	while true do
+		if v2094 then
+			local v2777 = getgenv()
+			v2777.TimeFarmed = v2777.TimeFarmed + 1
+		end
+		local TimeFarmed = getgenv().TimeFarmed
+		local v2778 = math.floor(TimeFarmed / 3600)
+		local v2779 = math.floor(TimeFarmed % 3600 / 60)
+		TextLabel3.Text = string.format("%02d:%02d:%02d", v2778, v2779, TimeFarmed % 60)
+		task.wait(1)
+	end
+end
+
+task.spawn(v2169)
+LocalPlayer2.CharacterAdded:Connect(v2164)
+local v2170, v2171
+if LocalPlayer2.Character then
+	v2164(LocalPlayer2.Character)
+	v2170 = nil
+	v2171 = nil
+end
+local v2172 = table.create(1)
+local v2173 = { QueryV2 = true, Page = 1 }
+local v2174 = {}
+v2170 = {}
+v2171 = v2064.country
+v2170[v2171] = true
+v2174.Countries = v2170
+v2170 = {}
+v2174.Tags = v2170
+v2174.HideFull = true
+v2174.HideTagged = false
+v2174.FriendsOnly = false
+v2174.HidePassword = false
+v2173.Filters = v2174
+v2173.limit = 60
+v2173.Category = "Server List"
+v2173.Region = v2064.country
+local v2175 = {}
+v2170 = table.create(1)
+v2171 = { By = "kills", Dir = "low" }
+v2170[1] = v2171
+v2175.Keys = v2170
+v2173.Sort = v2175
+v2173.Search = ""
+v2173.notFull = false
+v2172[1] = v2173
+local v2176 = v2111
+
+local function v2177()
+	local format = string.format
+	local TimeFarmed2 = getgenv().TimeFarmed
+	local v2780 = v2114
+	local v2781 = v2113
+	local v2782 = v2176
+	local v2783 = tostring2
+	local v2784 = getgenv().renderEnabled
+	if not v2784 then
+		v2784 = false
+	end
+	local v2785 = v2783(v2784)
+	local v2786 = tostring2
+	local v2787 = getgenv().PYKey
+	if not v2787 then
+		v2787 = ""
+	end
+	local v2788 = format(
+		"    getgenv().TimeFarmed=%d\n    getgenv().SavedCarriedKills=%d\n    getgenv().SavedEmotes=%d\n    getgenv().SavedSessionStart=%d\n    getgenv().renderEnabled=%s\n    getgenv().PYKey = %q\n    loadstring(game:HttpGet(\"https://gitlab.com/zkay404-group/ProjectYielding/-/raw/main/ZKPublicFarm\"))()\n    ",
+		TimeFarmed2,
+		v2780,
+		v2781,
+		v2782,
+		v2785,
+		v2786(v2787)
+	)
+	pcall(queue_on_teleport, v2788)
+end
+
+local function v2178(p2789)
+	local v2790 = {}
+	for _, v2791 in ipairs(p2789.servers) do
+		local players = v2791.players
+		if players and 10 <= players and players <= 13 then
+			table.insert(v2790, v2791.id)
+		end
+	end
+	if #v2790 == 0 then
+		return nil
+	end
+	return v2790[math.random(1, #v2790)]
+end
+
+v2170 = false
+v2171 = false
+
+function doHopServer()
+	if not (v2171 or v2094) then
+		return
+	end
+	if v2170 then
+		return
+	end
+	v2170 = true
+	repeat
+		task.wait()
+	until not (v2122 or v2125)
+	v2177()
+
+	local function v2792()
+		while true do
+			local v2793 = v2178((game:GetService(v190[16]):WaitForChild("Ranked"):WaitForChild(v190[9]):InvokeServer(unpack(v2172))))
+			if v2793 then
+				local v2794 = v2793
+
+				local function v2795()
+					GetService:TeleportToPlaceInstance(game.PlaceId, v2794, LocalPlayer2)
+				end
+
+				local _, v2796
+				v2796, _ = pcall(v2795)
+				if v2796 then
+					task.wait(5)
+				else
+					task.wait(2)
+				end
+			else
+				task.wait(3)
+			end
+		end
+	end
+
+	task.spawn(v2792)
+end
+
+local function v2179()
+	print2(v190[5])
+	v2171 = true
+	doHopServer()
+end
+
+TextButton5.MouseButton1Click:Connect(v2179)
+local v2180 = {
+	422755031,
+	198131804,
+	681405668,
+	3414432341,
+	339633571,
+	430966809,
+	2039323684,
+	117723419,
+	1015595932,
+	263944298,
+	112905203,
+	2284964418,
+	1266437961,
+	3120648134,
+	1148139861,
+	1633233654,
+	3350014406,
+	971193650,
+	661273560,
+	66105529,
+	77342385,
+	167343092,
+	2055306963,
+	141984224,
+	438917845,
+	1391134999,
+	1796550069,
+	255671730,
+	3162123826,
+	1059541187,
+	1259898795,
+	31070091,
+	1041867508,
+	994994173,
+	1446694201,
+	77525605,
+	1001242712,
+	2533866869,
+	4983064295
+}
+
+local function v2181(p2797)
+	if p2797 == LocalPlayer2 then
+		return
+	end
+	local v2798 = table.create(3)
+	local v2799 = v190[34]
+	local v2800 = v190[13]
+	v2798[1] = "Staff"
+	v2798[2] = v2799
+	v2798[3] = v2800
+
+	local function v2801()
+		return (p2797:IsInGroup(12013007))
+	end
+
+	local v2802, v2803
+	v2803, v2802 = pcall(v2801)
+	local v2804
+	if v2803 and v2802 then
+		local function v2805()
+			return (p2797:GetRoleInGroup(12013007))
+		end
+
+		local v2806, v2807
+		v2807, v2806 = pcall(v2805)
+		local v2808 = false
+		if v2807 then
+			v2804 = v2806
+		else
+			v2804 = v2807
+		end
+		if v2804 then
+			v2804 = v2806
+		end
+		if v2807 and v2806 then
+			local lower2 = v2806:lower()
+			v2808 = lower2:find("moderator")
+			if not v2808 then
+				v2808 = lower2:find("developer")
+			end
+			if not v2808 then
+				v2808 = lower2:find("contributor")
+			end
+			if not v2808 then
+				v2808 = lower2:find("tester")
+			end
+			if not v2808 then
+				v2808 = lower2:find("owner")
+			end
+			if not v2808 then
+				v2808 = lower2:find(v190[36])
+			end
+		end
+		if v2808 then
+			v2096(false)
+			v2171 = true
+			doHopServer()
+			return
+		end
+	end
+	for _, v2809 in ipairs(v2180) do
+		if p2797.UserId == v2809 then
+			v2096(false)
+			v2171 = true
+			doHopServer()
+			return
+		end
+	end
+	local v2810 = {}
+	local v2811, v2812, v2813
+	v2813, v2812, v2811 = ipairs(v2180)
+	local v2814 = nil
+	while true do
+		local v2815
+		v2811, v2815 = v2813(v2812, v2811)
+		if v2811 == nil then
+			break
+		else
+			local v2816 = v2815
+
+			local function v2817()
+				return (p2797:IsFriendsWith(v2816))
+			end
+
+			local v2818, v2819
+			v2819, v2818 = pcall(v2817)
+			if v2819 and v2818 then
+				local v2820 = v2815
+
+				local function v2821()
+					return (Players2:GetNameFromUserIdAsync(v2820))
+				end
+
+				local v2822, v2823
+				v2823, v2822 = pcall(v2821)
+				if v2823 then
+					v2814 = v2822
+					local v2824 = v2815
+
+					local function v2825()
+						local UserService = game:GetService("UserService")
+						local GetUserInfosByUserIdsAsync = UserService.GetUserInfosByUserIdsAsync
+						local v2832 = { v2824 }
+						local v2833 = GetUserInfosByUserIdsAsync(UserService, v2832)
+						if v2833 and v2833[1] then
+							v2814 = v2833[1].DisplayName
+						end
+					end
+
+					pcall(v2825)
+					v2810[#v2810 + 1] = v2814 .. "(@" .. v2822 .. ")"
+				end
+			end
+		end
+	end
+	if 0 < #v2810 then
+		v2096(false)
+		v2171 = true
+		doHopServer()
+		return
+	end
+	local leaderstats = p2797:FindFirstChild("leaderstats")
+	local v2826, v2827
+	if leaderstats then
+		v2827 = leaderstats:FindFirstChild("Total Kills")
+		v2826 = v2827
+	else
+		v2827 = p2797:FindFirstChild("Total Kills")
+		v2826 = v2827
+	end
+	if v2826 then
+		v2827 = v2826.Value
+		if 10000 <= v2827 then
+			doHopServer()
+			return true
+		end
+	end
+	local v2828 = v2826
+	local v2829 = v2827
+	if v2826 then
+		v2829 = nil
+
+		local function v2830()
+			if 10000 <= v2828.Value then
+				v2829:Disconnect()
+				doHopServer()
+			end
+		end
+
+		v2829 = v2828:GetPropertyChangedSignal("Value"):Connect(v2830)
+		return
+	end
+	v2829 = nil
+
+	local function v2831(p2834)
+		local Name = p2834.Name
+		local v2835 = Name
+		if Name == "leaderstats" then
+			v2835 = v2829
+			local v2836 = v2835
+			v2835 = v2835.Disconnect
+			v2835(v2836)
+			v2835 = nil
+
+			local function v2837(p2838)
+				local Name2 = p2838.Name
+				local v2839 = Name2
+				if Name2 == "Total Kills" then
+					v2835:Disconnect()
+					local Value2 = p2838.Value
+					v2839 = Value2
+					if 10000 <= Value2 then
+						doHopServer()
+						return
+					end
+					v2839 = nil
+
+					local function v2840()
+						if 10000 <= p2838.Value then
+							v2839:Disconnect()
+							doHopServer()
+						end
+					end
+
+					v2839 = p2838:GetPropertyChangedSignal("Value"):Connect(v2840)
+				end
+			end
+
+			v2835 = p2834.ChildAdded:Connect(v2837)
+		end
+	end
+
+	v2829 = p2797.ChildAdded:Connect(v2831)
+end
+
+local function v2182(p2841)
+	task.spawn(pcall, v2181, p2841)
+end
+
+Players2.PlayerAdded:Connect(v2182)
+pairs2(Players2:GetPlayers())
+local v2183 = 117723419
+local v2184 = 2284964418
+deathCounterConns = {}
+deathCounterDebounce = {}
+hookedChars = {}
+v2183 = false
+
+local function v2185()
+	return 0
+end
+
+local function v2186(p2842)
+	local v2843 = p2842:IsA("Accessory")
+	if v2843 then
+		v2843 = p2842.Name == "Counter"
+	end
+	return v2843
+end
+
+v2184 = nil
+
+local function v2187(p2844)
+	local v2845 = LocalPlayer2.Character
+	if v2845 then
+		v2845 = v2845:FindFirstChild(v190[20])
+	end
+	if not (v2845 and v2845) then
+		return
+	end
+	local v2846 = v2845
+
+	local function v2847()
+		local function v2848()
+			v2846.Velocity = Vector3.new()
+			RunService2.Heartbeat:Wait()
+			v2846.Velocity = Vector3.new()
+		end
+
+		RunService2.RenderStepped:Once(v2848)
+
+		local function v2849()
+			v2846.CFrame = p2844
+		end
+
+		RunService2.Heartbeat:Once(v2849)
+	end
+
+	task.spawn(v2847)
+end
+
+local function v2188()
+	local Character6 = LocalPlayer2.Character
+	local v2850
+	if Character6 then
+		v2850 = Character6:FindFirstChildOfClass("Humanoid")
+	else
+		v2850 = Character6
+	end
+	if Character6 and v2850 and workspace.CurrentCamera then
+		local CFrame3 = workspace.CurrentCamera.CFrame
+		workspace.CurrentCamera:Destroy()
+		local Camera = Instance.new("Camera", workspace)
+		Camera.CameraType = Enum.CameraType.Custom
+		Camera.CameraSubject = v2850
+		Camera.CFrame = CFrame3
+		LocalPlayer2.CameraMode = Enum.CameraMode.Classic
+		local Head = Character6:FindFirstChild("Head")
+		if Head then
+			Head.Anchored = false
+		end
+	end
+end
+
+local function v2189(p2851)
+	local function v2852()
+		return p2851.DisplayName
+	end
+
+	local v2853, v2854
+	v2854, v2853 = pcall(v2852)
+	if not (v2854 and v2853 and v2853 ~= "") then
+		return p2851.Name
+	end
+	for _, v2855 in pairs2(Players2:GetPlayers()) do
+		if not (v2855 == p2851 or v2855.DisplayName ~= v2853) then
+			return p2851.Name
+		end
+	end
+	return v2853
+end
+
+local function v2190(p2856)
+	if v2184 then
+		v2184:Disconnect()
+		v2184 = nil
+	end
+	if not p2856 then
+		return
+	end
+
+	local function v2857(p2858)
+		if not p2858.Animation.AnimationId:match("11343250001") then
+			return
+		end
+		v2183 = true
+
+		local function v2859(...)
+			task.wait(0.2)
+			local v2860 = v2185()
+			local v2861
+			v2861 = v2860 <= 0
+			if v2860 <= 0 then
+				local function v2862()
+					p2858:Stop()
+				end
+
+				pcall(v2862)
+			end
+			task.spawn(v2188)
+			local Character7 = LocalPlayer2.Character
+			Character7:WaitForChild(v190[17], 1)
+			local FindFirstChild8 = Character7:FindFirstChild(v190[20])
+			local CFrame4 = FindFirstChild8.CFrame
+			local v2863, v2864, v2865, v2866
+			v2866, v2865, v2864 = pairs2(Players2:GetPlayers())
+			local v2867
+			while true do
+				local v2868
+				v2864, v2868 = v2866(v2865, v2864)
+				if v2864 == nil then
+					break
+				elseif v2868 ~= LocalPlayer2 then
+					local v2869 = v2868.Character
+					if v2869 then
+						v2867 = v2869:FindFirstChild(v190[20])
+					else
+						v2867 = v2869
+					end
+					if v2869 then
+						v2869 = v2869:FindFirstChildOfClass("Humanoid")
+					end
+					if v2869 and v2867 and v2869 then
+						for _, v2870 in pairs2(v2869:GetPlayingAnimationTracks()) do
+							if v2870.Animation.AnimationId:match("11343318134") and
+								(FindFirstChild8.Position - v2867.Position).Magnitude <= 15 then
+								v2863 = v2868
+							end
+						end
+					end
+				end
+			end
+			local v2871
+			if v2863 then
+				v2871 = v2863.Character
+				if v2871 then
+					v2871 = v2871:FindFirstChildOfClass("Humanoid")
+				end
+				v2189(v2863)
+			else
+				local Model3 = Instance.new("Model")
+				v2871 = Instance.new("Humanoid", Model3)
+				v2871.Health = 100
+				local v2872 = v2871
+
+				local function v2873()
+					v2872.Health = 0
+				end
+
+				task.delay(v2860 + 2, v2873)
+			end
+			local v2874
+			if 0 < v2860 then
+				task.wait(v2860)
+				Character7 = LocalPlayer2.Character
+				if Character7 then
+					v2874 = Character7:FindFirstChild(v190[20])
+				else
+					v2874 = Character7
+				end
+				if not (Character7 and v2874) then
+					return
+				end
+			end
+			local v2875 = workspace.CurrentCamera
+			if v2875 then
+				v2875 = workspace.CurrentCamera.CameraSubject
+			end
+			if workspace.CurrentCamera then
+				workspace.CurrentCamera.CameraSubject = nil
+			end
+			local Humanoid7 = Character7:FindFirstChildOfClass("Humanoid")
+			local v2876 = CFrame.new(0, -10000, 0)
+			local v2877 = CFrame.Angles(math.rad(90), 0, 0)
+			local v2878 = tick()
+			repeat
+				v2187(v2876 * v2877)
+				if 0 < v2860 and not v2861 then
+					v2861 = true
+
+					local function v2879()
+						p2858:Stop()
+					end
+
+					pcall(v2879)
+				end
+				RunService2.RenderStepped:Wait()
+			until v2871 and v2871.Health <= 0 or Humanoid7 and Humanoid7.Health <= 0 or v2878 + 10 <= tick()
+			if workspace.CurrentCamera then
+				workspace.CurrentCamera.CameraSubject = v2875
+			end
+			v2187(CFrame4)
+			task.wait(1)
+			local Character8 = LocalPlayer2.Character
+			if Character8 then
+				local Freeze = Character8:FindFirstChild("Freeze")
+				local NoRotate = Character8:FindFirstChild("NoRotate")
+				if Freeze then
+					Freeze:Destroy()
+				end
+				if NoRotate then
+					NoRotate:Destroy()
+				end
+			end
+			task.spawn(v2188)
+			v2183 = false
+			return
+		end
+
+		task.spawn(v2859)
+	end
+
+	v2184 = p2856.AnimationPlayed:Connect(v2857)
+end
+
+local function v2191(p2880)
+	if not p2880 then
+		return
+	end
+	local Humanoid8 = p2880:FindFirstChildOfClass("Humanoid")
+	if Humanoid8 then
+		v2190(Humanoid8)
+	else
+		local function v2881()
+			local Humanoid9 = p2880:WaitForChild("Humanoid", 5)
+			if Humanoid9 then
+				v2190(Humanoid9)
+			end
+		end
+
+		task.spawn(v2881)
+	end
+end
+
+v2191(LocalPlayer2.Character)
+
+local function v2192(p2882)
+	task.wait(0.1)
+	v2191(p2882)
+end
+
+LocalPlayer2.CharacterAdded:Connect(v2192)
+
+local function v2193(p2883, p2884)
+	if not (p2883 and p2884 and p2884 ~= LocalPlayer2) then
+		return
+	end
+	if hookedChars[p2883] then
+		return
+	end
+	hookedChars[p2883] = true
+	for _, v2885 in pairs2(p2883:GetChildren()) do
+		if v2186(v2885) then
+		end
+	end
+	local function v2886()
+	end
+	local Connect4 = p2883.ChildAdded:Connect(v2886)
+	table.insert(deathCounterConns, Connect4)
+end
+
+local function v2194(p2887)
+	if p2887 == LocalPlayer2 then
+		return
+	end
+	if p2887.Character then
+		task.spawn(v2193, p2887.Character, p2887)
+	end
+	local function v2888()
+	end
+	local Connect5 = p2887.CharacterAdded:Connect(v2888)
+	table.insert(deathCounterConns, Connect5)
+end
+
+for _, v2195 in pairs2(deathCounterConns) do
+	pcall(v2195.Disconnect, v2195)
+end
+local v2196, v2197, v2198
+v2198, v2197, v2196 = pairs2(Players2:GetPlayers())
+local v2199, v2200, v2201
+while true do
+	local v2202
+	v2196, v2202 = v2198(v2197, v2196)
+	v2201 = nil
+	v2200 = nil
+	v2199 = nil
+	if v2196 == nil then
+		break
+	else
+		v2194(v2202)
+	end
+end
+local function v2203()
+end
+table.insert(deathCounterConns, Players2.PlayerAdded:Connect(v2203))
+v2200 = {}
+v2199 = {}
+
+local function v2204()
+	getgenv().desync = nil
+end
+
+LocalPlayer2.CharacterAdded:Connect(v2204)
+
+function isCountering(p2889)
+	if not p2889 then
+		return false
+	end
+	local Model4 = p2889:FindFirstAncestorWhichIsA("Model")
+	if Model4 and Model4:FindFirstChild("Counter") then
+		return true
+	end
+	for _, v2890 in pairs2(p2889:GetPlayingAnimationTracks()) do
+		local AnimationId3 = v2890.Animation.AnimationId
+		if AnimationId3:match("13726226905") or AnimationId3:match("13726235415") then
+			return true
+		end
+	end
+	return false
+end
+
+v2201 = function(p2891, p2892)
+	if not p2892 then
+		return
+	end
+	if v2200[p2891] then
+		local function v2893()
+			v2200[p2891]:Disconnect()
+		end
+
+		pcall(v2893)
+		v2200[p2891] = nil
+	end
+	repeat
+		task.wait()
+	until not (p2892.Parent and
+		not (p2892:FindFirstChild(v190[20]) and p2892:FindFirstChildOfClass("Humanoid")))
+	if not p2892.Parent then
+		return
+	end
+	local FindFirstChild9 = p2892:FindFirstChild(v190[20])
+	local Humanoid10 = p2892:FindFirstChildOfClass("Humanoid")
+	if not (FindFirstChild9 and Humanoid10) then
+		return
+	end
+
+	local function v2894(p2896, p2897)
+		local match = tostring2(p2897):match("%d+")
+		for _, v2898 in pairs2(p2896:GetPlayingAnimationTracks()) do
+			if v2898.Animation.AnimationId:match(match) then
+				return v2898
+			end
+		end
+		return nil
+	end
+
+	local function v2895(p2899)
+		local AnimationId4 = p2899.Animation.AnimationId
+		local Character9 = LocalPlayer2.Character
+		local v2900
+		if Character9 then
+			v2900 = Character9:FindFirstChild(v190[20])
+		else
+			v2900 = Character9
+		end
+		if Character9 then
+			local v2901 = v2900
+			if v2900 then
+				local function v2902(...)
+					if p2899.WeightTarget == 0 or p2899.Speed == 0 then
+						return
+					end
+					local v2903 = CFrame.new(9000000000, 9000000000, 9000000000)
+					local v2904 = Character9
+					local v2905 = v2904
+					if v2904 then
+						v2905 = Character9:FindFirstChildOfClass("Humanoid")
+					end
+
+					local function v2906(p3057)
+						local function v3058()
+							local v3062
+							while true do
+								local v3063 = getgenv()
+								local v3064 = { CFrame = v2903 }
+								v3063.desync = v3064
+								task.wait()
+								local v3065 = LocalPlayer2.Character
+								if v3065 then
+									v3062 = v3065:FindFirstChild(v190[20])
+								else
+									v3062 = v3065
+								end
+								if v3065 then
+									v3065 = v3065:FindFirstChildOfClass("Humanoid")
+								end
+								if v3065 and v3062 and v3065 then
+									v2901 = v3062
+									v2905 = v3065
+									if p3057() then
+										return
+									end
+								else
+									return
+								end
+							end
+						end
+
+						pcall(v3058)
+						getgenv().desync = nil
+						if sethiddenproperty then
+							local v3059 = LocalPlayer2.Character
+							if v3059 then
+								v3059 = LocalPlayer2.Character:FindFirstChild(v190[20])
+							end
+							if v3059 then
+								local v3060 = v3059
+
+								local function v3061()
+									sethiddenproperty(v3060, v190[14], nil)
+								end
+
+								pcall(v3061)
+							end
+						end
+					end
+
+					local function v2907(p3066)
+						if not p3066 then
+							return false
+						end
+						local v3067 = p3066:FindFirstAncestorWhichIsA("Model")
+						if v3067 then
+							v3067 = v3067:FindFirstChild("Counter")
+						end
+						v3067 = v3067 and true or false
+						return v3067
+					end
+
+					local function v2908(p3068)
+						local v3069 = "Part"
+						local v3070 = Instance.new(v3069, workspace)
+						v3070.Anchored = true
+						v3070.Size = p3068
+						v3070.CanCollide = false
+						v3070.Transparency = 1
+						v3069 = false
+
+						local function v3071(p3075)
+							if p3075 == v2901 or p3075 == getgenv().InvisPart30 then
+								v3069 = true
+							end
+						end
+
+						local function v3072(p3076)
+							if p3076 == v2901 or p3076 == getgenv().InvisPart30 then
+								v3069 = false
+							end
+						end
+
+						local function v3073()
+							return v3069
+						end
+
+						local Connect14 = v3070.Touched:Connect(v3071)
+						local Connect15 = v3070.TouchEnded:Connect(v3072)
+
+						local function v3074()
+							local function v3077()
+								v3070:Destroy()
+							end
+
+							pcall(v3077)
+							Connect14:Disconnect()
+							Connect15:Disconnect()
+						end
+
+						return v3070, v3073, v3074
+					end
+
+					local function v2909()
+						local InvisPart30 = getgenv().InvisPart30
+						if getgenv().InvisActive and InvisPart30 then
+							return InvisPart30.Position
+						end
+						return v2901.Position
+					end
+
+					if AnimationId4:match("12983333733") and
+						p2892:GetAttribute("Ulted") ~= nil then
+						local function v2910()
+							if p2892:FindFirstChild(v190[17], true) and
+								p2892:FindFirstChild("Freeze") then
+								task.wait(4.25)
+								local v3078 = tick()
+
+								local function v3079()
+									local v3080
+									v3080 = 150 < (v2909() - FindFirstChild9.Position).Magnitude
+									if not v3080 then
+										v3080 = v3078 + 2 <= tick()
+									end
+									if not v3080 then
+										v3080 = not p2899.IsPlaying
+									end
+									return v3080
+								end
+
+								v2906(v3079)
+							end
+						end
+
+						task.delay(1, v2910)
+					end
+					if AnimationId4:match("11365563255") and
+						p2892:GetAttribute("Ulted") ~= nil then
+						local function v2911()
+							if p2892:FindFirstChild(v190[17], true) and
+								p2892:FindFirstChild("Freeze") then
+								task.wait(3)
+								local v3081 = tick()
+
+								local function v3082()
+									local v3083
+									v3083 = v3081 + 2.5 <= tick()
+									return v3083
+								end
+
+								v2906(v3082)
+							end
+						end
+
+						task.delay(1, v2911)
+					end
+					if AnimationId4:match("13927612951") and
+						p2892:GetAttribute("Ulted") ~= nil then
+						local v2912 = tick()
+
+						local function v2913()
+							local v3084
+							v3084 = 150 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3084 then
+								v3084 = v2912 + 2.5 <= tick()
+							end
+							return v3084
+						end
+
+						v2906(v2913)
+					end
+					if AnimationId4:match("12342141464") then
+						task.wait(3.5)
+						local v2914 = tick()
+
+						local function v2915()
+							local v3085
+							v3085 = 125 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3085 then
+								v3085 = v2914 + 1.25 <= tick()
+							end
+							return v3085
+						end
+
+						v2906(v2915)
+					end
+					if AnimationId4:match("12463072679") then
+						local v2916 = tick()
+
+						local function v2917()
+							local v3086
+							v3086 = 25 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3086 then
+								v3086 = v2916 + 0.75 <= tick()
+							end
+							return v3086
+						end
+
+						v2906(v2917)
+					end
+					if AnimationId4:match("13603396939") then
+						local v2918 = tick()
+
+						local function v2919()
+							local v3087
+							v3087 = 7.5 < (v2909() - (FindFirstChild9.CFrame * CFrame.new(0, 0, -1)).Position).Magnitude
+							if not v3087 then
+								v3087 = isCountering(Humanoid10)
+							end
+							if not v3087 then
+								v3087 = v2918 + 2.5 <= tick()
+							end
+							return v3087
+						end
+
+						v2906(v2919)
+					end
+					if AnimationId4:match("12460977270") then
+						local v2920, v2921, v2922
+						v2922, v2921, v2920 = v2908(Vector3.new(12.5, 5, 12.5))
+						local v2923 = tick()
+						while true do
+							v2922.CFrame = FindFirstChild9.CFrame * CFrame.new(0, 0, -6.25)
+							if v2921() and not isCountering(Humanoid10) then
+								local v2924 = getgenv()
+								local v2925 = { CFrame = v2903 }
+								v2924.desync = v2925
+							else
+								getgenv().desync = nil
+							end
+							RunService2.RenderStepped:Wait()
+							if v2923 + 1.85 <= tick() or not p2899.IsPlaying then
+								getgenv().desync = nil
+								v2920()
+								break
+							end
+						end
+					end
+					if AnimationId4:match("14057231976") then
+						local v2926 = tick()
+
+						local function v2927()
+							local v3088
+							v3088 = 10 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3088 then
+								v3088 = v2926 + 0.5 <= tick()
+							end
+							return v3088
+						end
+
+						v2906(v2927)
+						task.wait(0.5)
+						local v2928 = tick()
+
+						local function v2929()
+							local v3089
+							v3089 = 10 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3089 then
+								v3089 = isCountering(Humanoid10)
+							end
+							if not v3089 then
+								v3089 = v2928 + 1.25 <= tick()
+							end
+							return v3089
+						end
+
+						v2906(v2929)
+					end
+					if AnimationId4:match("13630786846") then
+						local v2930, v2931, v2932
+						v2932, v2931, v2930 = v2908(Vector3.new(25, 10, 75))
+						local v2933 = tick()
+						while true do
+							v2932.CFrame = FindFirstChild9.CFrame * CFrame.new(0, 0, -37.5)
+							if v2931() and not isCountering(Humanoid10) then
+								local v2934 = getgenv()
+								local v2935 = { CFrame = v2903 }
+								v2934.desync = v2935
+							else
+								getgenv().desync = nil
+							end
+							RunService2.RenderStepped:Wait()
+							if v2933 + 1.5 <= tick() or not p2899.IsPlaying then
+								getgenv().desync = nil
+								v2930()
+								break
+							end
+						end
+					end
+					if AnimationId4:match("72451715583225") then
+						local v2936 = tick()
+
+						local function v2937()
+							local v3090
+							v3090 = 15 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3090 then
+								v3090 = v2936 + 0.75 <= tick()
+							end
+							return v3090
+						end
+
+						v2906(v2937)
+					end
+					local match2 = AnimationId4:match("13813955149")
+					local v2938 = match2
+					if match2 then
+						local Magnitude = (v2909() - FindFirstChild9.Position).Magnitude
+						v2938 = Magnitude
+						if Magnitude <= 25 then
+							local v2939 = getgenv()
+							local v2940 = { CFrame = CFrame.new(9000000000, 9000000000, 9000000000) }
+							v2939.desync = v2940
+							task.wait(0.75)
+							local v2941 = getgenv()
+							v2941.desync = nil
+							v2938 = v2941
+						end
+						v2938 = nil
+
+						local function v2942(p3091)
+							if p3091:IsA("MeshPart") and
+								p3091.Name:lower() == "trash can" then
+								v2938:Disconnect()
+								local v3092 = tick()
+
+								local function v3093()
+									local v3094
+									v3094 = 25 < (v2909() - p3091.Position).Magnitude
+									if not v3094 then
+										v3094 = v3092 + 2 <= tick()
+									end
+									return v3094
+								end
+
+								v2906(v3093)
+							end
+						end
+
+						v2938 = workspace.Thrown.ChildAdded:Connect(v2942)
+					end
+					v2938 = AnimationId4
+					local v2943 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2943, "15128849047")
+					if v2938 then
+						v2938 = tick
+						v2938 = v2938()
+						local v2944 = v2938
+
+						local function v2945()
+							local v3095
+							v3095 = 100 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3095 then
+								v3095 = v2894(Humanoid10, "15123665491")
+							end
+							if not v3095 then
+								v3095 = v2944 + 3 <= tick()
+							end
+							return v3095
+						end
+
+						v2906(v2945)
+					end
+					v2938 = AnimationId4
+					local v2946 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2946, "15391323441")
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2938(5.5)
+						v2938 = tick
+						v2938 = v2938()
+						local v2947 = v2938
+
+						local function v2948()
+							local v3096
+							v3096 = 125 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3096 then
+								v3096 = v2947 + 1 <= tick()
+							end
+							return v3096
+						end
+
+						v2906(v2948)
+					end
+					v2938 = AnimationId4
+					local v2949 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2949, "16082123712")
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2938(2.5)
+						v2938 = tick
+						v2938 = v2938()
+						local v2950 = v2938
+
+						local function v2951()
+							local v3097
+							v3097 = 50 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3097 then
+								v3097 = v2950 + 1.5 <= tick()
+							end
+							return v3097
+						end
+
+						v2906(v2951)
+					end
+					v2938 = AnimationId4
+					local v2952 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2952, "14719290328")
+					if v2938 then
+						v2938 = v2909
+						v2938 = v2938()
+						v2938 = v2938 - FindFirstChild9.Position
+						v2938 = v2938.Magnitude
+						if v2938 <= 50 then
+							v2938 = getgenv
+							v2938 = v2938()
+							local v2953 = { CFrame = CFrame.new(9000000000, 9000000000, 9000000000) }
+							v2938.desync = v2953
+						end
+						v2938 = task
+						v2938 = v2938.wait
+						v2938(0.5)
+						v2938 = p2899.IsPlaying
+					end
+					if v2938 then
+						v2938 = tick
+						v2938 = v2938()
+						local v2954 = v2938
+
+						local function v2955()
+							local v3098
+							v3098 = 50 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3098 then
+								v3098 = v2907(v2905)
+							end
+							if not v3098 then
+								v3098 = v2954 + 3.5 <= tick()
+							end
+							if not v3098 then
+								v3098 = not p2899.IsPlaying
+							end
+							return v3098
+						end
+
+						v2906(v2955)
+					end
+					v2938 = AnimationId4
+					local v2956 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2956, "15520132233")
+					if v2938 then
+						v2938 = tick
+						v2938 = v2938()
+						local v2957 = v2938
+
+						local function v2958()
+							local v3099
+							v3099 = 50 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3099 then
+								v3099 = v2907(v2905)
+							end
+							if not v3099 then
+								v3099 = v2957 + 3.3 <= tick()
+							end
+							if not v3099 then
+								v3099 = not p2899.IsPlaying
+							end
+							return v3099
+						end
+
+						v2906(v2958)
+						repeat
+							task.wait()
+						until v2938 + 5.5 <= tick()
+						local v2959 = tick()
+
+						local function v2960()
+							local v3100
+							v3100 = 100 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3100 then
+								v3100 = v2907(v2905)
+							end
+							if not v3100 then
+								v3100 = v2959 + 1 <= tick()
+							end
+							if not v3100 then
+								v3100 = not p2899.IsPlaying
+							end
+							return v3100
+						end
+
+						v2906(v2960)
+					end
+					v2938 = AnimationId4
+					local v2961 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2961, "15676072469")
+					if v2938 then
+						v2938 = v2908
+						local v2962, v2963
+						v2938, v2963, v2962 = v2938(Vector3.new(50, 10, 150))
+						local v2964 = tick()
+						while true do
+							v2938.CFrame = FindFirstChild9.CFrame * CFrame.new(0, 0, -75)
+							if v2963() and not v2907(v2905) then
+								local v2965 = getgenv()
+								local v2966 = { CFrame = v2903 }
+								v2965.desync = v2966
+							else
+								getgenv().desync = nil
+							end
+							RunService2.RenderStepped:Wait()
+							if v2964 + 2 <= tick() or not p2899.IsPlaying then
+								getgenv().desync = nil
+								v2962()
+								break
+							end
+						end
+					end
+					v2938 = AnimationId4
+					local v2967 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2967, "16057411888")
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2938(4.25)
+						v2938 = tick
+						v2938 = v2938()
+						local v2968 = v2938
+
+						local function v2969()
+							local v3101
+							v3101 = 50 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3101 then
+								v3101 = v2968 + 2 <= tick()
+							end
+							return v3101
+						end
+
+						v2906(v2969)
+					end
+					v2938 = AnimationId4
+					local v2970 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2970, "18435535291")
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2938(4.25)
+						v2938 = tick
+						v2938 = v2938()
+						local v2971 = v2938
+
+						local function v2972()
+							local v3102
+							v3102 = 100 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3102 then
+								v3102 = v2971 + 1.25 <= tick()
+							end
+							return v3102
+						end
+
+						v2906(v2972)
+					end
+					v2938 = AnimationId4
+					local v2973 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2973, "17857788598")
+					local v2974 = v2973
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2938(0.65)
+						v2938 = p2899.IsPlaying
+						v2974 = 0.65
+					end
+					if v2938 then
+						v2938 = Instance
+						v2938 = v2938.new
+						v2974 = "Part"
+						v2938 = v2938(v2974, workspace)
+						v2938.Anchored = true
+						v2974 = Vector3
+						v2974 = v2974.new
+						v2974 = v2974(35, 2048, 35)
+						v2938.Size = v2974
+						v2938.CanCollide = false
+						v2938.Transparency = 1
+						v2974 = false
+
+						local function v2975(p3103)
+							if p3103 == v2901 or p3103 == getgenv().InvisPart30 then
+								v2974 = true
+							end
+						end
+
+						local Connect6 = v2938.Touched:Connect(v2975)
+
+						local function v2976(p3104)
+							if p3104 == v2901 or p3104 == getgenv().InvisPart30 then
+								v2974 = false
+							end
+						end
+
+						local Connect7 = v2938.TouchEnded:Connect(v2976)
+						local v2977 = tick()
+						while true do
+							v2938.CFrame = FindFirstChild9.CFrame
+							if v2974 and not v2894(Humanoid10, "15128849047") then
+								local v2978 = getgenv()
+								local v2979 = { CFrame = CFrame.new(9000000000, 9000000000, 9000000000) }
+								v2978.desync = v2979
+							else
+								getgenv().desync = nil
+							end
+							RunService2.RenderStepped:Wait()
+							if v2977 + 0.85 <= tick() or not p2899.IsPlaying then
+								getgenv().desync = nil
+								Connect6:Disconnect()
+								Connect7:Disconnect()
+								local v2980 = v2938
+
+								local function v2981()
+									v2980:Destroy()
+								end
+
+								pcall(v2981)
+								break
+							end
+						end
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "129651400898906")
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2974 = 0.5
+						v2938(v2974)
+						v2938 = FindFirstChild9.CFrame
+						v2974 = tick
+						v2974 = v2974()
+						local v2982 = v2974
+
+						local function v2983()
+							local v3105
+							v3105 = 75 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3105 then
+								v3105 = v2982 + 1.25 <= tick()
+							end
+							if not v3105 then
+								v3105 = not p2899.IsPlaying
+							end
+							return v3105
+						end
+
+						v2906(v2983)
+						task.wait(1)
+						local v2984 = v2938
+						local v2985 = tick()
+
+						local function v2986()
+							local v3106
+							v3106 = 75 < (v2909() - v2984.Position).Magnitude
+							if not v3106 then
+								v3106 = v2985 + 1.75 <= tick()
+							end
+							return v3106
+						end
+
+						v2906(v2986)
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "18896229321")
+					if v2938 then
+						v2938 = tick
+						v2938 = v2938()
+						v2974 = v2906
+						local v2987 = v2938
+
+						local function v2988()
+							local v3107
+							v3107 = 15 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3107 then
+								v3107 = isCountering(Humanoid10)
+							end
+							if not v3107 then
+								v3107 = v2987 + 3.5 <= tick()
+							end
+							if not v3107 then
+								v3107 = not p2899.IsPlaying
+							end
+							return v3107
+						end
+
+						v2974(v2988)
+						v2974 = task
+						v2974 = v2974.wait
+						v2974(1)
+						v2974 = p2899.IsPlaying
+						if v2974 then
+							v2974 = v2909
+							v2974 = v2974()
+							v2974 = v2974 - FindFirstChild9.Position
+							v2974 = v2974.Magnitude
+							if v2974 <= 25 then
+								v2974 = tick
+								v2974 = v2974()
+								local v2989 = v2974
+
+								local function v2990()
+									local v3108
+									v3108 = 25 < (v2909() - FindFirstChild9.Position).Magnitude
+									if not v3108 then
+										v3108 = v2989 + 2 <= tick()
+									end
+									if not v3108 then
+										v3108 = not p2899.IsPlaying
+									end
+									return v3108
+								end
+
+								v2906(v2990)
+							end
+						end
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "18897119503")
+					if v2938 then
+						v2938 = tick
+						v2938 = v2938()
+						v2974 = v2906
+						local v2991 = v2938
+
+						local function v2992()
+							local v3109
+							v3109 = 50 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3109 then
+								v3109 = v2991 + 1.5 <= tick()
+							end
+							return v3109
+						end
+
+						v2974(v2992)
+					end
+					local _leave103 = false
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "106755459092436")
+					if not v2938 then
+						v2938 = AnimationId4
+						v2974 = v2938
+						v2938 = v2938.match
+						v2938 = v2938(v2974, "75502010126640")
+					end
+					if not v2938 then
+						_leave103 = true
+					end
+					if not _leave103 then
+						v2938 = tick
+						v2938 = v2938()
+						v2974 = v2906
+						local v2993 = v2938
+
+						local function v2994()
+							local v3110
+							v3110 = 50 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3110 then
+								v3110 = v2993 + 2 <= tick()
+							end
+							return v3110
+						end
+
+						v2974(v2994)
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "16515850153")
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.spawn
+
+						v2974 = function()
+							if (v2909() - FindFirstChild9.Position).Magnitude <= 15 then
+								local v3111 = getgenv()
+								local v3112 = { CFrame = CFrame.new(9000000000, 9000000000, 9000000000) }
+								v3111.desync = v3112
+							end
+							local Dotted = workspace.Thrown:WaitForChild("Dotted", 1)
+							if Dotted then
+								local Dots = Dotted:WaitForChild("Dots", 1)
+								if not Dots then
+									getgenv().desync = nil
+									return
+								end
+								local v3113 = tick()
+								if 20 < (v2909() - Dots.Position).Magnitude then
+									getgenv().desync = nil
+								end
+
+								local function v3114()
+									local v3115
+									v3115 = 20 < (v2909() - Dots.Position).Magnitude
+									if not v3115 then
+										v3115 = v2907(v2905)
+									end
+									if not v3115 then
+										v3115 = v3113 + 4.25 <= tick()
+									end
+									return v3115
+								end
+
+								v2906(v3114)
+							else
+								getgenv().desync = nil
+							end
+						end
+
+						v2938(v2974)
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "16431491215")
+					if v2938 then
+						v2938 = tick
+						v2938 = v2938()
+						repeat
+							v2974 = task
+							v2974 = v2974.wait
+							v2974()
+							v2974 = v2909
+							v2974 = v2974()
+							v2974 = v2974 - (FindFirstChild9.CFrame * CFrame.new(0, 0, -25)).Position
+							v2974 = v2974.Magnitude
+						until v2974 <= 25 or v2894(Humanoid10, "15128849047") or v2938 + 0.75 <= tick()
+						v2974 = v2894
+						v2974 = v2974(Humanoid10, "15128849047")
+						if not v2974 then
+							v2974 = v2906
+							local v2995 = v2938
+
+							local function v2996()
+								local v3116
+								v3116 = 25 < (v2909() - (FindFirstChild9.CFrame * CFrame.new(0, 0, -20)).Position).Magnitude
+								if not v3116 then
+									v3116 = v2894(Humanoid10, "15128849047")
+								end
+								if not v3116 then
+									v3116 = v2995 + 0.75 <= tick()
+								end
+								return v3116
+							end
+
+							v2974(v2996)
+						end
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "16597912086")
+					if v2938 then
+						v2938 = tick
+						v2938 = v2938()
+						v2974 = v2906
+						local v2997 = v2938
+
+						local function v2998()
+							local v3117
+							v3117 = 15 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3117 then
+								v3117 = isCountering(Humanoid10)
+							end
+							if not v3117 then
+								v3117 = v2997 + 0.75 <= tick()
+							end
+							return v3117
+						end
+
+						v2974(v2998)
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "17275150809")
+					if v2938 then
+						v2938 = tick
+						v2938 = v2938()
+						v2974 = v2906
+						local v2999 = v2938
+
+						local function v3000()
+							local v3118
+							v3118 = 50 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3118 then
+								v3118 = v2999 + 1 <= tick()
+							end
+							return v3118
+						end
+
+						v2974(v3000)
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "17278415853")
+					if v2938 then
+						v2938 = p2892
+						v2974 = v2938
+						v2938 = v2938.GetAttribute
+						v2938 = v2938(v2974, "Character")
+						if v2938 == "Esper" then
+							v2938 = task
+							v2938 = v2938.wait
+							v2974 = 11
+							v2938(v2974)
+							v2938 = tick
+							v2938 = v2938()
+							v2974 = v2906
+							local v3001 = v2938
+
+							local function v3002()
+								local v3119
+								v3119 = 100 < (v2909() - FindFirstChild9.Position).Magnitude
+								if not v3119 then
+									v3119 = v3001 + 6 <= tick()
+								end
+								return v3119
+							end
+
+							v2974(v3002)
+						end
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "16734584478")
+					if v2938 then
+						v2938 = tick
+						v2938 = v2938()
+						v2974 = v2906
+						local v3003 = v2938
+
+						local function v3004()
+							local v3120
+							v3120 = 75 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3120 then
+								v3120 = v3003 + 5.75 <= tick()
+							end
+							return v3120
+						end
+
+						v2974(v3004)
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "13376869471")
+					if v2938 then
+						v2938 = Instance
+						v2938 = v2938.new
+						v2974 = "Part"
+						v2938 = v2938(v2974, workspace)
+						v2938.Anchored = true
+						v2974 = Vector3
+						v2974 = v2974.new
+						v2974 = v2974(10, 7.5, 60)
+						v2938.Size = v2974
+						v2938.CanCollide = false
+						v2938.Transparency = 1
+						v2974 = false
+
+						local function v3005(p3121)
+							if p3121 == v2901 or p3121 == getgenv().InvisPart30 then
+								v2974 = true
+							end
+						end
+
+						local Connect8 = v2938.Touched:Connect(v3005)
+
+						local function v3006(p3122)
+							if p3122 == v2901 or p3122 == getgenv().InvisPart30 then
+								v2974 = false
+							end
+						end
+
+						local Connect9 = v2938.TouchEnded:Connect(v3006)
+						local v3007 = tick()
+						repeat
+							v2938.CFrame = FindFirstChild9.CFrame * CFrame.new(0, 0, -v2938.Size.Z / 2)
+							RunService2.RenderStepped:Wait()
+						until v2974 or v3007 + 3 <= tick() or not p2899.IsPlaying
+						if v2974 then
+							local v3008 = tick()
+
+							local function v3009()
+								local v3123 = not v2974
+								if not v3123 then
+									v3123 = v3008 + 1 <= tick()
+								end
+								if not v3123 then
+									v3123 = not p2899.IsPlaying
+								end
+								return v3123
+							end
+
+							v2906(v3009)
+						end
+						Connect8:Disconnect()
+						Connect9:Disconnect()
+						local v3010 = v2938
+
+						local function v3011()
+							v3010:Destroy()
+						end
+
+						pcall(v3011)
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "13294790250")
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2974 = 0.5
+						v2938(v2974)
+						v2938 = tick
+						v2938 = v2938()
+						v2974 = v2906
+						local v3012 = v2938
+
+						local function v3013()
+							local v3124
+							v3124 = 10 < (v2909() - (FindFirstChild9.CFrame * CFrame.new(0, 0, -2.5)).Position).Magnitude
+							if not v3124 then
+								v3124 = isCountering(Humanoid10)
+							end
+							if not v3124 then
+								v3124 = v3012 + 0.75 <= tick()
+							end
+							return v3124
+						end
+
+						v2974(v3013)
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "13632347366")
+					if v2938 then
+						v2938 = tick
+						v2938 = v2938()
+						v2974 = v2906
+						local v3014 = v2938
+
+						local function v3015()
+							local v3125
+							v3125 = 75 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3125 then
+								v3125 = v2907(v2905)
+							end
+							if not v3125 then
+								v3125 = v3014 + 1.75 <= tick()
+							end
+							if not v3125 then
+								v3125 = not p2899.IsPlaying
+							end
+							return v3125
+						end
+
+						v2974(v3015)
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "13723174078")
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2974 = 0.5
+						v2938(v2974)
+						v2938 = tick
+						v2938 = v2938()
+						v2974 = v2906
+						local v3016 = v2938
+
+						local function v3017()
+							local v3126
+							v3126 = 50 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3126 then
+								v3126 = v3016 + 2 <= tick()
+							end
+							if not v3126 then
+								v3126 = not p2899.IsPlaying
+							end
+							return v3126
+						end
+
+						v2974(v3017)
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "13881335713")
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2974 = 0.75
+						v2938(v2974)
+						v2938 = p2899.IsPlaying
+					end
+					if v2938 then
+						v2938 = Instance
+						v2938 = v2938.new
+						v2974 = "Part"
+						v2938 = v2938(v2974, workspace)
+						v2938.Anchored = true
+						v2974 = Vector3
+						v2974 = v2974.new
+						v2974 = v2974(35, 5, 60)
+						v2938.Size = v2974
+						v2938.CanCollide = false
+						v2938.Transparency = 1
+						v2974 = false
+
+						local function v3018(p3127)
+							if p3127 == v2901 or p3127 == getgenv().InvisPart30 then
+								v2974 = true
+							end
+						end
+
+						local Connect10 = v2938.Touched:Connect(v3018)
+
+						local function v3019(p3128)
+							if p3128 == v2901 or p3128 == getgenv().InvisPart30 then
+								v2974 = false
+							end
+						end
+
+						local Connect11 = v2938.TouchEnded:Connect(v3019)
+						local v3020 = tick()
+						repeat
+							v2938.CFrame = FindFirstChild9.CFrame * CFrame.new(0, 0, -v2938.Size.Z / 2)
+							RunService2.RenderStepped:Wait()
+						until v2974 or v3020 + 3 <= tick() or not p2899.IsPlaying
+						if v2974 then
+							local v3021 = tick()
+
+							local function v3022()
+								local v3129 = not v2974
+								if not v3129 then
+									v3129 = v3021 + 1 <= tick()
+								end
+								if not v3129 then
+									v3129 = not p2899.IsPlaying
+								end
+								return v3129
+							end
+
+							v2906(v3022)
+						end
+						Connect10:Disconnect()
+						Connect11:Disconnect()
+						local v3023 = v2938
+
+						local function v3024()
+							v3023:Destroy()
+						end
+
+						pcall(v3024)
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "14721837245")
+					if v2938 then
+						v2938 = tick
+						v2938 = v2938()
+						v2974 = v2906
+						local v3025 = v2938
+
+						local function v3026()
+							local v3130
+							v3130 = 25 < (v2909() - FindFirstChild9.Position).Magnitude
+							if not v3130 then
+								v3130 = v2894(Humanoid10, "15128849047")
+							end
+							if not v3130 then
+								v3130 = v3025 + 1.5 <= tick()
+							end
+							if not v3130 then
+								v3130 = not p2899.IsPlaying
+							end
+							return v3130
+						end
+
+						v2974(v3026)
+						v2974 = tick
+						v2974 = v2974()
+						if v2938 + 1.5 <= v2974 then
+							v2974 = task
+							v2974 = v2974.wait
+							v2974(1)
+							v2974 = tick
+							v2974 = v2974()
+							local v3027 = v2974
+
+							local function v3028()
+								local v3131
+								v3131 = 100 < (v2909() - FindFirstChild9.Position).Magnitude
+								if not v3131 then
+									v3131 = v3027 + 1.5 <= tick()
+								end
+								if not v3131 then
+									v3131 = not p2899.IsPlaying
+								end
+								return v3131
+							end
+
+							v2906(v3028)
+						end
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v2938 = v2938(v2974, "13083332742")
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2974 = 1
+						v2938(v2974)
+						v2938 = Instance
+						v2938 = v2938.new
+						v2974 = "Part"
+						v2938 = v2938(v2974, workspace)
+						v2938.Anchored = true
+						v2974 = Vector3
+						v2974 = v2974.new
+						v2974 = v2974(12.5, 5, 1000)
+						v2938.Size = v2974
+						v2938.CanCollide = false
+						v2938.Transparency = 1
+						v2974 = task
+						v2974 = v2974.delay
+						local v3029 = v2938
+
+						local function v3030()
+							v3029.CFrame = FindFirstChild9.CFrame * CFrame.new(0, 0, -v3029.Size.Z / 2)
+						end
+
+						v2974(0.25, v3030)
+						v2974 = false
+
+						local function v3031(p3132)
+							if p3132 == v2901 or p3132 == getgenv().InvisPart30 then
+								v2974 = true
+							end
+						end
+
+						local Connect12 = v2938.Touched:Connect(v3031)
+
+						local function v3032(p3133)
+							if p3133 == v2901 or p3133 == getgenv().InvisPart30 then
+								v2974 = false
+							end
+						end
+
+						local Connect13 = v2938.TouchEnded:Connect(v3032)
+						local v3033 = tick()
+						while true do
+							if v2974 and not v2907(v2905) then
+								local v3034 = getgenv()
+								local v3035 = { CFrame = CFrame.new(9000000000, 9000000000, 9000000000) }
+								v3034.desync = v3035
+							else
+								getgenv().desync = nil
+							end
+							RunService2.RenderStepped:Wait()
+							if v3033 + 4 <= tick() or not p2899.IsPlaying then
+								getgenv().desync = nil
+								Connect12:Disconnect()
+								Connect13:Disconnect()
+								local v3036 = v2938
+
+								local function v3037()
+									v3036:Destroy()
+								end
+
+								pcall(v3037)
+								break
+							end
+						end
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					local v3038 = "13146710762"
+					v2938 = v2938(v2974, v3038)
+					local v3039 = v3038
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2974 = 3.25
+						v2938(v2974)
+						v2938 = p2899.IsPlaying
+						v3039 = v3038
+					end
+					if v2938 then
+						v2938 = {}
+						v2974 = table.create(2)
+						local _ = CFrame.new(50, 0, -200) * CFrame.Angles(0, math.rad(-15), 0)
+						local _ = CFrame.new(-50, 0, -200) * CFrame.Angles(0, math.rad(15), 0)
+						local new4 = CFrame.new
+						local v3040 = {}
+						local v3041, v3042, v3043
+						v3043, v3042, v3041 = ipairs(v2974)
+						new4(0, 0, -200)
+						v3039 = false
+						while true do
+							local v3044
+							v3041, v3044 = v3043(v3042, v3041)
+							if v3041 == nil then
+								break
+							else
+								local Part = Instance.new("Part", workspace)
+								Part.Anchored = true
+								Part.Size = Vector3.new(100, 75, 400)
+								Part.CanCollide = false
+								Part.Transparency = 1
+								Part.CFrame = FindFirstChild9.CFrame * v3044
+								table.insert(v2938, Part)
+
+								local function v3045(p3134)
+									if p3134 == v2901 or
+										p3134 == getgenv().InvisPart30 then
+										v3039 = true
+									end
+								end
+
+								table.insert(v3040, Part.Touched:Connect(v3045))
+
+								local function v3046(p3135)
+									if p3135 == v2901 or
+										p3135 == getgenv().InvisPart30 then
+										v3039 = false
+									end
+								end
+
+								table.insert(v3040, Part.TouchEnded:Connect(v3046))
+							end
+						end
+						local v3047 = tick()
+						while true do
+							if v3039 and not v2907(v2905) then
+								local v3048 = getgenv()
+								local v3049 = { CFrame = CFrame.new(9000000000, 9000000000, 9000000000) }
+								v3048.desync = v3049
+							else
+								getgenv().desync = nil
+							end
+							RunService2.RenderStepped:Wait()
+							if v3047 + 6 <= tick() or not p2899.IsPlaying then
+								getgenv().desync = nil
+								for _, v3050 in ipairs(v3040) do
+									v3050:Disconnect()
+								end
+								ipairs(v2938)
+								break
+							end
+						end
+					end
+					v2938 = AnimationId4
+					v2974 = v2938
+					v2938 = v2938.match
+					v3039 = "11343318134"
+					v2938 = v2938(v2974, v3039)
+					if v2938 then
+						v2938 = task
+						v2938 = v2938.wait
+						v2974 = 7.5
+						v2938(v2974)
+						v2938 = p2899.IsPlaying
+						if not v2938 then
+							return
+						end
+						v2938 = {}
+						v2974 = table.create(2)
+						v3039 = CFrame
+						v3039 = v3039.new
+						v3039 = v3039(60, 0, -250)
+						v3039 = v3039 * CFrame.Angles(0, math.rad(-15), 0)
+						local _ = CFrame.new(-60, 0, -250) * CFrame.Angles(0, math.rad(15), 0)
+						local new5 = CFrame.new
+						v3039 = { false, false, false }
+						ipairs(v2974)
+						new5(0, 0, -250)
+						local v3051 = tick()
+						while true do
+							for v3052, v3053 in ipairs(v2938) do
+								v3053.CFrame = FindFirstChild9.CFrame * v2974[v3052]
+							end
+							if v3039[1] or v3039[2] or v3039[3] then
+								local v3054 = getgenv()
+								local v3055 = { CFrame = CFrame.new(9000000000, 9000000000, 9000000000) }
+								v3054.desync = v3055
+							else
+								getgenv().desync = nil
+							end
+							RunService2.RenderStepped:Wait()
+							if v3051 + 2.5 <= tick() or not p2899.IsPlaying then
+								getgenv().desync = nil
+								for _, v3056 in ipairs({}) do
+									v3056:Disconnect()
+								end
+								ipairs(v2938)
+								break
+							end
+						end
+					end
+				end
+
+				task.spawn(v2902)
+				return
+			end
+		end
+	end
+
+	v2200[p2891] = Humanoid10.AnimationPlayed:Connect(v2895)
+end
+
+local function v2205(p3136)
+	if p3136 == LocalPlayer2 then
+		return
+	end
+	if p3136.Character then
+		task.spawn(v2201, p3136, p3136.Character)
+	end
+
+	local function v3137(p3138)
+		task.spawn(v2201, p3136, p3138)
+	end
+
+	v2199[p3136] = p3136.CharacterAdded:Connect(v3137)
+end
+
+local v2206, v2207, v2208
+v2208, v2207, v2206 = pairs2(Players2:GetPlayers())
+local v2209, v2210, v2211
+while true do
+	local v2212
+	v2206, v2212 = v2208(v2207, v2206)
+	v2211 = false
+	v2210 = false
+	v2209 = 1059541187
+	if v2206 == nil then
+		break
+	else
+		task.spawn(v2205, v2212)
+	end
+end
+
+local function v2213(p3139)
+	if p3139 == LocalPlayer2 then
+		return
+	end
+
+	local function v3140()
+		local v3141 = tick()
+		repeat
+			RunService2.RenderStepped:Wait()
+		until p3139:GetAttribute("PreloadDone") or v3141 + 30 <= tick()
+		if p3139 and p3139.Parent then
+			if p3139.Character then
+				task.spawn(v2201, p3139, p3139.Character)
+			end
+
+			local function v3142(p3143)
+				task.spawn(v2201, p3139, p3143)
+			end
+
+			v2199[p3139] = p3139.CharacterAdded:Connect(v3142)
+		end
+	end
+
+	task.spawn(v3140)
+end
+
+Players2.PlayerAdded:Connect(v2213)
+
+local function v2214(p3144)
+	if v2200[p3144] then
+		local function v3145()
+			v2200[p3144]:Disconnect()
+		end
+
+		pcall(v3145)
+		v2200[p3144] = nil
+	end
+	if v2199[p3144] then
+		local function v3146()
+			v2199[p3144]:Disconnect()
+		end
+
+		pcall(v3146)
+		v2199[p3144] = nil
+	end
+end
+
+Players2.PlayerRemoving:Connect(v2214)
+
+local function v2215()
+	local Character10 = LocalPlayer2.Character
+	if sethiddenproperty and Character10 and Character10.Parent then
+		local function v3147()
+			sethiddenproperty(Character10, v190[14], nil)
+		end
+
+		pcall(v3147)
+	end
+	if Character10 and Character10.Parent then
+		local function v3148()
+			Character10.HumanoidRootPart.CFrame = CFrame.new(Character10.HumanoidRootPart.Position)
+		end
+
+		pcall(v3148)
+
+		local function v3149()
+			Character10.HumanoidRootPart.AssemblyLinearVelocity = Vector3.zero
+		end
+
+		pcall(v3149)
+
+		local function v3150()
+			Character10.HumanoidRootPart.AssemblyAngularVelocity = Vector3.zero
+		end
+
+		pcall(v3150)
+
+		local function v3151()
+			Character10.HumanoidRootPart.Velocity = Vector3.zero
+		end
+
+		pcall(v3151)
+
+		local function v3152()
+			Character10.HumanoidRootPart.RotVelocity = Vector3.zero
+		end
+
+		pcall(v3152)
+		local Humanoid11 = Character10:FindFirstChildOfClass("Humanoid")
+		if Humanoid11 then
+			local function v3153()
+				Humanoid11.AutoRotate = true
+			end
+
+			pcall(v3153)
+		end
+	end
+end
+
+local function v2216()
+	local v3154 = nil
+	local v3155 = table.create(1)
+	local v3156 = { Goal = "LeftClick" }
+	local v3157 = 0
+	v3156.MousePos = CFrame.new(0, 0, 0, v3157, 0, 0, 0, 0, 0, 0, 0, 0)
+	v3155[1] = v3156
+	local v3158 = table.create(1)
+	local v3159 = { Goal = v190[21] }
+	v3158[1] = v3159
+	local v3160 = table.create(1)
+	local v3161 = { Mobile = true, Goal = "LeftClick" }
+	v3157 = 0
+	v3161.MousePos = CFrame.new(0, v3157, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	v3160[1] = v3161
+	local v3162 = table.create(1)
+	local v3163 = { Dash = Enum.KeyCode.W, Key = Enum.KeyCode.Q, Goal = "KeyPress" }
+	v3157 = 0
+	v3163.MousePos = CFrame.new(v3157, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+	v3162[1] = v3163
+	local v3164 = { "17799224866" }
+	v3157 = "17838006839"
+	v3164[2] = v3157
+	v3164[3] = "17838619895"
+	v3164[4] = "17857788598"
+	v3164[5] = "17857880283"
+	v3164[6] = "18179181663"
+	v3164[7] = "18182425133"
+	v3164[8] = "18464351556"
+	v3164[9] = "18464356233"
+	v3164[10] = "18464372850"
+	v3164[11] = "18464362124"
+	v3164[12] = "136370737633649"
+	v3164[13] = "130301810149072"
+	v3164[14] = "17889290569"
+	v3164[15] = "10479335397"
+	v3164[16] = "18896229321"
+
+	local function v3165(p3167)
+		if not p3167 then
+			return false
+		end
+		for _, v3168 in pairs2(p3167:GetPlayingAnimationTracks()) do
+			local AnimationId5 = v3168.Animation.AnimationId
+			for _, v3169 in ipairs(v3164) do
+				if AnimationId5:match(v3169) then
+					v2211 = true
+					return true
+				end
+			end
+		end
+		v2211 = false
+		return false
+	end
+
+	v3157 = false
+
+	local function v3166(...)
+		if not v2094 then
+			return
+		end
+		if v3157 then
+			return
+		end
+		if getgenv().desync then
+			return
+		end
+		local v3170, v3171
+		if v2122 then
+			if v2123 then
+				GetService4:SendKeyEvent(true, Enum.KeyCode.One, false, game)
+				task.wait(0.001)
+				GetService4:SendKeyEvent(false, Enum.KeyCode.One, false, game)
+				task.wait(0.05)
+				local PlayerGui2 = LocalPlayer2:FindFirstChild("PlayerGui")
+				if not PlayerGui2 then
+					return
+				end
+				local Hotbar3 = PlayerGui2:FindFirstChild("Hotbar")
+				if not Hotbar3 then
+					return
+				end
+				local Backpack2 = Hotbar3:FindFirstChild("Backpack")
+				if not Backpack2 then
+					return
+				end
+				local Hotbar4 = Backpack2:FindFirstChild("Hotbar")
+				if not Hotbar4 then
+					return
+				end
+				local FindFirstChild10 = Hotbar4:FindFirstChild("1")
+				if FindFirstChild10 then
+					local Base2 = FindFirstChild10:FindFirstChild("Base")
+					if Base2 then
+						v3171 = not (Base2:FindFirstChild("Cooldown") == nil)
+						if v3171 and
+							Base2:FindFirstChild("Cooldown").Size.Y.Scale <= -0.8 then
+							v2123 = false
+						end
+					end
+				end
+			else
+				if v2123 then
+					v2123 = false
+				end
+				local PlayerGui3 = LocalPlayer2:FindFirstChild("PlayerGui")
+				if not PlayerGui3 then
+					return
+				end
+				local Hotbar5 = PlayerGui3:FindFirstChild("Hotbar")
+				if not Hotbar5 then
+					return
+				end
+				local Backpack3 = Hotbar5:FindFirstChild("Backpack")
+				if not Backpack3 then
+					return
+				end
+				local Hotbar6 = Backpack3:FindFirstChild("Hotbar")
+				if not Hotbar6 then
+					return
+				end
+				local FindFirstChild11 = Hotbar6:FindFirstChild("2")
+				if FindFirstChild11 then
+					local Base3 = FindFirstChild11:FindFirstChild("Base")
+					if Base3 then
+						v3170 = Base3:FindFirstChild("Cooldown") == nil
+						if not v3170 then
+							v3170 = -0.2 <= Base3:FindFirstChild("Cooldown").Size.Y.Scale
+						end
+						if v3170 then
+							local function v3172()
+								LocalPlayer2.Character.HumanoidRootPart.CFrame = CFrame.new(150, 441, 32)
+							end
+
+							pcall(v3172)
+							GetService4:SendKeyEvent(true, Enum.KeyCode.Two, false, game)
+							task.wait(0.001)
+							GetService4:SendKeyEvent(false, Enum.KeyCode.Two, false, game)
+							task.wait(0.05)
+						end
+					end
+				end
+			end
+		else
+			if not v2121 then
+				return
+			end
+			local Character11 = v2121.Character
+			local Character12 = LocalPlayer2.Character
+			if not (Character11 and Character12) then
+				return
+			end
+			if Character11:FindFirstChildWhichIsA("ForceField") then
+				return
+			end
+			if Character11:FindFirstChild(v190[17]) then
+				return
+			end
+			if Character11:FindFirstChild(v190[45]) then
+				return
+			end
+			if Character11:FindFirstChild(v190[39]) then
+				return
+			end
+			if Character11:FindFirstChild(v190[37]) then
+				return
+			end
+			if v3165((Character12:FindFirstChildOfClass("Humanoid"))) then
+				return
+			end
+			local Humanoid12 = Character11:FindFirstChildOfClass("Humanoid")
+			local Torso2 = Character11:FindFirstChild("Torso")
+			if not (Humanoid12 and Torso2 and Torso2.Transparency ~= 1) then
+				return
+			end
+			v3157 = true
+			local Communicate = Character12:FindFirstChild("Communicate")
+			if not Communicate then
+				v3157 = false
+				return
+			end
+			if not Character12:GetAttribute(v190[49]) then
+				local Communicate2 = Character12:FindFirstChild("Communicate")
+				local pcall5 = pcall
+				local FireServer = Communicate2.FireServer
+				local v3173 = {
+					Goal = "KeyPress",
+					Key = Enum.KeyCode.Space,
+					MousePos = CFrame.new(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+				}
+				pcall5(FireServer, Communicate2, v3173)
+			end
+			if Character12:FindFirstChild("Ragdoll") or
+				Character12:FindFirstChild("RagdollSim") then
+				local FireServer2 = Communicate.FireServer
+				local v3174 = { Dash = Enum.KeyCode.S, Key = Enum.KeyCode.Q, Goal = "KeyPress" }
+				FireServer2(Communicate, v3174)
+			end
+			if Character11:FindFirstChild("Ragdoll") or
+				Character11:FindFirstChild("RagdollSim") or Humanoid12.Health <= 15 then
+				if Character12:GetAttribute("HoldingM1") then
+					Communicate:FireServer(unpack(v3158))
+					task.wait(0.1)
+				end
+				if not (Humanoid12.Health <= 15 or v3154 and not (7 <= tick() - v3154)) then
+					Communicate:FireServer(unpack(v3162))
+					v3154 = tick()
+				end
+				GetService4:SendKeyEvent(true, Enum.KeyCode.One, false, game)
+				task.wait(0.001)
+				GetService4:SendKeyEvent(false, Enum.KeyCode.One, false, game)
+				task.wait(0.05)
+				GetService4:SendKeyEvent(true, Enum.KeyCode.Two, false, game)
+				task.wait(0.001)
+				GetService4:SendKeyEvent(false, Enum.KeyCode.Two, false, game)
+				task.wait(0.05)
+				GetService4:SendKeyEvent(true, Enum.KeyCode.Three, false, game)
+				task.wait(0.001)
+				GetService4:SendKeyEvent(false, Enum.KeyCode.Three, false, game)
+				task.wait(0.05)
+				GetService4:SendKeyEvent(true, Enum.KeyCode.Four, false, game)
+				task.wait(0.001)
+				GetService4:SendKeyEvent(false, Enum.KeyCode.Four, false, game)
+			else
+				task.wait(0.1)
+				if Character12:GetAttribute("mobile") then
+					Communicate:FireServer(unpack(v3160))
+				else
+					Communicate:FireServer(unpack(v3155))
+				end
+				task.wait(0.1)
+				Communicate:FireServer(unpack(v3158))
+				task.wait(0.1)
+			end
+		end
+		v3157 = false
+	end
+
+	RunService2.Heartbeat:Connect(v3166)
+end
+
+local function v2217(p3175, p3176, p3177)
+	local CFrame5 = p3175.CFrame
+	local _, v3178, _
+	_, v3178, _ = CFrame5:ToEulerAnglesYXZ()
+	local v3179 = CFrame.fromEulerAnglesYXZ(0, v3178, 0)
+	return CFrame.new((CFrame.new(CFrame5.Position) * v3179 * CFrame.new(0, p3176, p3177)).Position) * v3179
+end
+
+local function v2218()
+	local v3180 = nil
+	v2121 = v2163()
+
+	local function v3181()
+		if not v2094 then
+			if v2119 then
+				v2119 = false
+				v2215()
+				v2121 = v2163()
+			end
+			return
+		end
+		if v2183 then
+			return
+		end
+		if not v2121 then
+			v2119 = false
+			v2215()
+			v2121 = v2163()
+			return
+		end
+		local Character13 = v2121.Character
+		local Character14 = LocalPlayer2.Character
+		if not Character14 then
+			return
+		end
+		if LocalPlayer2.PlayerGui.Bar.MagicHealth.Health.Bar.Size.X == UDim.new(1, 0) and not v2210 then
+			v2210 = true
+			v2123 = false
+
+			local function v3182()
+				task.wait(0.5)
+				GetService4:SendKeyEvent(true, Enum.KeyCode.G, false, game)
+				task.wait(0.001)
+				GetService4:SendKeyEvent(false, Enum.KeyCode.G, false, game)
+				v2210 = false
+			end
+
+			task.spawn(v3182)
+		end
+		if Character14:GetAttribute("Ulted") then
+			v2122 = true
+			v2119 = false
+			return
+		end
+		v2122 = false
+		if v2125 then
+			return
+		end
+		if not Character13 then
+			if v2119 then
+				v2119 = false
+			end
+			v2215()
+			v2121 = v2163()
+			return
+		end
+		if Character13:GetAttribute("Ulted") or Character13:FindFirstChild("Counter") then
+			if v2119 then
+				v2119 = false
+			end
+			v2215()
+			v2121 = v2163()
+			return
+		end
+		local FindFirstChild12 = Character13:FindFirstChild(v190[20])
+		local Humanoid13 = Character13:FindFirstChildOfClass("Humanoid")
+		local FindFirstChild13 = Character14:FindFirstChild(v190[20])
+		local Humanoid14 = Character14:FindFirstChildOfClass("Humanoid")
+		if not (FindFirstChild12 and Humanoid13 and (FindFirstChild13 and Humanoid14)) then
+			if v2119 then
+				v2119 = false
+			end
+			v2215()
+			v2121 = v2163()
+			return
+		end
+		if Character13:FindFirstChild(v190[17]) then
+			if Humanoid13.Health <= 20 then
+				v2215()
+				v2121 = v2163()
+				return
+			end
+			if v3180 then
+				if 5 <= tick() - v3180 or
+					Character13:FindFirstChildOfClass("Humanoid") and
+						Character13.Humanoid.Health <= 10 then
+					v3180 = nil
+					if v2119 then
+						v2119 = false
+					end
+					v2215()
+					v2121 = v2163()
+					return
+				end
+			else
+				v3180 = tick()
+			end
+		end
+		if Humanoid13.Health <= 0 then
+			if v2119 then
+				v2119 = false
+			end
+			v2215()
+			v2121 = v2163()
+			return
+		end
+		local Torso3 = Character13:FindFirstChild("Torso")
+		if not (Torso3 and Torso3.Transparency ~= 1) then
+			if v2119 then
+				v2119 = false
+			end
+			v2215()
+			v2121 = v2163()
+			return
+		end
+		if not v2119 then
+			print2(v190[8] .. v2121.Name)
+			v2119 = true
+			Humanoid14.AutoRotate = false
+		end
+		FindFirstChild13.AssemblyLinearVelocity = Vector3.zero
+		FindFirstChild13.AssemblyAngularVelocity = Vector3.zero
+		if getgenv().desync then
+			v2120 = v2217(FindFirstChild12, 0, 5)
+		else
+			FindFirstChild13.CFrame = v2217(FindFirstChild12, 0, 5)
+			v2120 = FindFirstChild13.CFrame
+		end
+		if sethiddenproperty then
+			sethiddenproperty(FindFirstChild13, v190[14], FindFirstChild12)
+		end
+	end
+
+	RunService2.Heartbeat:Connect(v3181)
+end
+
+local function v2219()
+	local VirtualUser = game:GetService("VirtualUser")
+
+	local function v3183()
+		VirtualUser:CaptureController()
+		VirtualUser:ClickButton2(Vector2.new())
+	end
+
+	LocalPlayer2.Idled:Connect(v3183)
+end
+
+v2209 = task
+v2209 = v2209.spawn
+
+local function v2220()
+	local v3184
+	while true do
+		local v3185 = LocalPlayer2.Character
+		if v3185 then
+			v3184 = v3185:GetAttribute("Character")
+		else
+			v3184 = v3185
+		end
+		if v3185 then
+			v3185 = v3185:FindFirstChild("Communicate")
+		end
+		if v3185 and v3184 ~= "Purple" then
+			local pcall6 = pcall
+			local FireServer3 = v3185.FireServer
+			local v3186 = { Goal = v190[18], Character = "Purple" }
+			pcall6(FireServer3, v3185, v3186)
+		end
+		task.wait(1)
+	end
+end
+
+v2209(v2220)
+v2209 = task
+v2209 = v2209.spawn
+
+local function v2221()
+	local Thrown = workspace:FindFirstChild("Thrown")
+	if Thrown then
+		for _, v3187 in pairs2(Thrown:GetChildren()) do
+			if v3187.Name:lower():find("debris") or v3187.Name:lower() == "part" then
+				task.spawn(pcall, _deleteNew, v3187)
+			end
+		end
+
+		local function v3188(p3189)
+			if p3189.Name:lower():find("debris") or p3189.Name:lower() == "part" then
+				task.spawn(pcall, _deleteNew, p3189)
+			end
+		end
+
+		Thrown.ChildAdded:Connect(v3188)
+	end
+end
+
+v2209(v2221)
+v2209 = task
+v2209 = v2209.wait
+v2209(1)
+v2209 = v2216
+v2209()
+v2209 = v2218
+v2209()
+v2209 = v2219
+v2209()
+v2209 = task
+v2209 = v2209.spawn
+
+local function v2222()
+	task.wait(1)
+	while true do
+		if v2064.webhookUrl then
+			pcall(v2136)
+			task.wait(30)
+		end
+	end
+end
+
+v2209(v2222)
+v2209 = task
+v2209 = v2209.spawn
+
+local function v2223()
+	while true do
+		if getgenv().desync then
+			local v3190 = tick()
+			repeat
+				task.wait()
+			until 20 <= tick() - v3190 or not getgenv().desync
+			getgenv().desync = nil
+		end
+		RunService2.RenderStepped:Wait()
+	end
+end
+
+v2209(v2223)
+v2209 = task
+v2209 = v2209.spawn
+
+local function v2224()
+	while task.wait(0.25) do
+		local v3191 = LocalPlayer2.Character
+		if v3191 then
+			v3191 = v3191:FindFirstChild("Communicate")
+		end
+		if v3191 then
+			local pcall7 = pcall
+			local FireServer4 = v3191.FireServer
+			local v3192 = { Goal = "Emote Spin" }
+			pcall7(FireServer4, v3191, v3192)
+		end
+	end
+end
+
+v2209(v2224)
+v2209 = false
+
+local function v2225()
+	while true do
+		if v2122 then
+			v2209 = true
+		end
+		if (#Players2:GetPlayers() <= 7 or tonumber(v2064.hopOnCount) <= v2118 or v2209) and not (v2122 or v2125) then
+			doHopServer()
+		end
+		task.wait(1)
+	end
+end
+
+task.spawn(v2225)
